@@ -8,6 +8,8 @@ emoji: "🏷️"
 featured: true
 ---
 
+![Infográfico sobre naming convention em cloud](images/Cloud%20Naming%20Convention%20Infographic.png)
+
 Durante o processo de landing zone de uma cloud provider, diversas decisões estratégicas são estabelecidas, como estrutura de rede, modelo de gestão de identidade, monitoramento, governança e segurança. Entre esses pilares destaca-se também a necessidade de definir uma taxonomia clara e consistente para a organização dos recursos.
 
 Nesse contexto, a padronização de **naming convention** torna-se um elemento fundamental. Mais do que simplesmente nomear recursos, ela garante à previsibilidade, facilita a identificação, facilita a automação e escalabilidade dos produtos e reforça as práticas de governança.
