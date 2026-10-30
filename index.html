@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Felipe Grucci · Arquiteto de Infraestrutura</title>
+  <meta name="description" content="Blog pessoal de Felipe Grucci – Arquiteto de Infraestrutura Cloud com foco em Terraform, Kubernetes, Azure e muito mais." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            mono: ['"Share Tech Mono"', 'monospace'],
+            body: ['Rajdhani', 'sans-serif'],
+            display: ['Orbitron', 'sans-serif'],
+          },
+          colors: {
+            cyber: {
+              black: '#0a0a0f',
+              dark: '#0d0d1a',
+              navy: '#0f0f2e',
+              purple: '#1a0a2e',
+              neon: '#00ffff',
+              pink: '#ff00ff',
+              violet: '#7b2fff',
+              electric: '#00e5ff',
+              hot: '#ff006e',
+              yellow: '#ffdd00',
+              green: '#00ff88',
+            }
+          },
+          boxShadow: {
+            'neon-cyan': '0 0 5px #00ffff, 0 0 20px #00ffff44, 0 0 40px #00ffff22',
+            'neon-pink': '0 0 5px #ff00ff, 0 0 20px #ff00ff44, 0 0 40px #ff00ff22',
+            'neon-violet': '0 0 5px #7b2fff, 0 0 20px #7b2fff44',
+            'neon-green': '0 0 5px #00ff88, 0 0 20px #00ff8844',
+          },
+          animation: {
+            'glitch': 'glitch 3s infinite',
+            'scan': 'scan 4s linear infinite',
+            'pulse-neon': 'pulse-neon 2s ease-in-out infinite',
+            'float': 'float 6s ease-in-out infinite',
+            'blink': 'blink 1s step-end infinite',
+            'flicker': 'flicker 0.15s infinite linear',
+          },
+          keyframes: {
+            glitch: {
+              '0%, 100%': { textShadow: '2px 0 #ff00ff, -2px 0 #00ffff' },
+              '25%': { textShadow: '-2px 0 #ff00ff, 2px 0 #00ffff' },
+              '50%': { textShadow: '2px 2px #ff00ff, -2px -2px #00ffff' },
+              '75%': { textShadow: '-2px -2px #ff00ff, 2px 2px #00ffff' },
+            },
+            scan: {
+              '0%': { transform: 'translateY(-100%)' },
+              '100%': { transform: 'translateY(100vh)' },
+            },
+            'pulse-neon': {
+              '0%, 100%': { opacity: '1' },
+              '50%': { opacity: '0.6' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            blink: {
+              '0%, 100%': { opacity: '1' },
+              '50%': { opacity: '0' },
+            },
+            flicker: {
+              '0%, 100%': { opacity: '1' },
+              '50%': { opacity: '0.95' },
+            },
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      background-color: #0a0a0f;
+      font-family: 'Rajdhani', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Grid scanlines overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Scanline moving effect */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.4), transparent);
+      animation: scan 6s linear infinite;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0a0a0f; }
+    ::-webkit-scrollbar-thumb { background: #00ffff44; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #00ffff88; }
+
+    /* Glitch text */
+    .glitch-text {
+      animation: glitch 3s infinite;
+    }
+
+    /* Neon border */
+    .neon-border-cyan {
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      box-shadow: 0 0 5px rgba(0, 255, 255, 0.2), inset 0 0 10px rgba(0, 255, 255, 0.05);
+      transition: all 0.3s ease;
+    }
+    .neon-border-cyan:hover {
+      border-color: rgba(0, 255, 255, 0.8);
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.4), inset 0 0 20px rgba(0, 255, 255, 0.1);
+    }
+
+    .neon-border-pink {
+      border: 1px solid rgba(255, 0, 255, 0.3);
+      box-shadow: 0 0 5px rgba(255, 0, 255, 0.2), inset 0 0 10px rgba(255, 0, 255, 0.05);
+      transition: all 0.3s ease;
+    }
+    .neon-border-pink:hover {
+      border-color: rgba(255, 0, 255, 0.8);
+      box-shadow: 0 0 15px rgba(255, 0, 255, 0.4), inset 0 0 20px rgba(255, 0, 255, 0.1);
+    }
+
+    /* Hero gradient background */
+    .hero-bg {
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(123, 47, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 40%),
+        radial-gradient(ellipse at 60% 80%, rgba(255, 0, 255, 0.08) 0%, transparent 40%),
+        linear-gradient(135deg, #0a0a0f 0%, #0d0d1a 50%, #0f0f2e 100%);
+    }
+
+    /* Clip corners effect */
+    .clip-corner {
+      clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+    }
+
+    .clip-corner-sm {
+      clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+    }
+
+    /* Tag style */
+    .cyber-tag {
+      background: rgba(0, 255, 255, 0.08);
+      border: 1px solid rgba(0, 255, 255, 0.25);
+      color: #00ffff;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      padding: 2px 10px;
+      clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+      transition: all 0.2s ease;
+    }
+    .cyber-tag:hover {
+      background: rgba(0, 255, 255, 0.18);
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    }
+
+    .cyber-tag-pink {
+      background: rgba(255, 0, 255, 0.08);
+      border: 1px solid rgba(255, 0, 255, 0.25);
+      color: #ff00ff;
+    }
+    .cyber-tag-pink:hover {
+      background: rgba(255, 0, 255, 0.18);
+      box-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
+    }
+
+    .cyber-tag-violet {
+      background: rgba(123, 47, 255, 0.08);
+      border: 1px solid rgba(123, 47, 255, 0.35);
+      color: #a855f7;
+    }
+
+    /* Link hover effect */
+    a.hover-neon {
+      position: relative;
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+    a.hover-neon:hover {
+      color: #00ffff;
+      text-shadow: 0 0 8px rgba(0, 255, 255, 0.7);
+    }
+
+    /* Post card hover */
+    .post-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: rgba(13, 13, 26, 0.8);
+      backdrop-filter: blur(10px);
+    }
+    .post-card:hover {
+      transform: translateY(-4px);
+    }
+
+    /* Avatar glow ring */
+    .avatar-ring {
+      background: conic-gradient(#00ffff, #ff00ff, #7b2fff, #00ffff);
+      animation: spin 4s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Navbar blur */
+    .navbar-blur {
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 255, 255, 0.12);
+    }
+
+    /* Mobile menu */
+    #mobile-menu {
+      transition: max-height 0.4s ease, opacity 0.4s ease;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+    }
+    #mobile-menu.open {
+      max-height: 400px;
+      opacity: 1;
+    }
+
+    /* Progress bar for skills */
+    .skill-bar-fill {
+      background: linear-gradient(90deg, #7b2fff, #00ffff);
+      box-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
+      transition: width 1.5s ease-in-out;
+    }
+
+    /* Section divider */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.4), rgba(255, 0, 255, 0.4), transparent);
+    }
+
+    /* Stat card */
+    .stat-card {
+      background: rgba(13, 13, 26, 0.6);
+      border: 1px solid rgba(0, 255, 255, 0.15);
+      transition: all 0.3s ease;
+    }
+    .stat-card:hover {
+      border-color: rgba(0, 255, 255, 0.5);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+      transform: scale(1.02);
+    }
+
+    /* Corner decorators */
+    .corner-tl::before, .corner-br::after {
+      content: '';
+      position: absolute;
+      width: 12px; height: 12px;
+    }
+    .corner-tl::before {
+      top: -1px; left: -1px;
+      border-top: 2px solid #00ffff;
+      border-left: 2px solid #00ffff;
+    }
+    .corner-br::after {
+      bottom: -1px; right: -1px;
+      border-bottom: 2px solid #ff00ff;
+      border-right: 2px solid #ff00ff;
+    }
+  </style>
+</head>
+<body class="text-gray-300 min-h-screen relative">
+
+  <!-- ══════════ NAVBAR ══════════ -->
+  <nav class="navbar-blur fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-16">
+
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="w-8 h-8 flex items-center justify-center bg-cyan-500/10 border border-cyan-500/40 clip-corner-sm group-hover:bg-cyan-500/20 transition-all duration-300">
+            <span class="text-cyan-400 font-display font-bold text-sm">FG</span>
+          </div>
+          <span class="font-display text-sm font-bold text-cyan-400 group-hover:text-shadow tracking-widest uppercase">
+            GRUCCI<span class="text-fuchsia-400">.</span>DEV
+          </span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="hidden md:flex items-center gap-8">
+          <a href="index.html" class="hover-neon text-gray-400 font-mono text-sm tracking-wide uppercase transition-all duration-300">
+            <span class="text-cyan-500 mr-1">./</span>Home
+          </a>
+          <a href="#bio" class="hover-neon text-gray-400 font-mono text-sm tracking-wide uppercase transition-all duration-300">
+            <span class="text-fuchsia-500 mr-1">./</span>Bio
+          </a>
+          <a href="#posts" class="hover-neon text-gray-400 font-mono text-sm tracking-wide uppercase transition-all duration-300">
+            <span class="text-violet-500 mr-1">./</span>Posts
+          </a>
+          <a href="https://github.com/Grucci" target="_blank" class="hover-neon text-gray-400 font-mono text-sm tracking-wide uppercase transition-all duration-300">
+            <span class="text-cyan-500 mr-1">~/</span>GitHub
+          </a>
+          <a href="https://www.linkedin.com/in/felipe-grucci-libona/" target="_blank"
+             class="font-mono text-xs uppercase tracking-widest px-4 py-2 clip-corner-sm transition-all duration-300
+                    bg-fuchsia-500/10 border border-fuchsia-500/40 text-fuchsia-400
+                    hover:bg-fuchsia-500/25 hover:border-fuchsia-400 hover:shadow-neon-pink">
+            LinkedIn ↗
+          </a>
+        </div>
+
+        <!-- Mobile hamburger -->
+        <button id="hamburger" class="md:hidden text-cyan-400 focus:outline-none" aria-label="Toggle menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path id="ham-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden border-t border-cyan-500/10">
+      <div class="px-4 py-4 space-y-3 bg-cyber-black/95">
+        <a href="index.html" class="block font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors py-2 border-b border-gray-800">
+          <span class="text-cyan-500">./</span> Home
+        </a>
+        <a href="#bio" class="block font-mono text-sm text-gray-400 hover:text-fuchsia-400 transition-colors py-2 border-b border-gray-800">
+          <span class="text-fuchsia-500">./</span> Bio
+        </a>
+        <a href="#posts" class="block font-mono text-sm text-gray-400 hover:text-violet-400 transition-colors py-2 border-b border-gray-800">
+          <span class="text-violet-500">./</span> Posts
+        </a>
+        <a href="https://github.com/Grucci" target="_blank" class="block font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors py-2 border-b border-gray-800">
+          <span class="text-cyan-500">~/</span> GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/felipe-grucci-libona/" target="_blank" class="block font-mono text-sm text-fuchsia-400 hover:text-fuchsia-300 transition-colors py-2">
+          LinkedIn ↗
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══════════ HERO ══════════ -->
+  <section class="hero-bg min-h-screen flex items-center justify-center pt-16 relative overflow-hidden">
+    <!-- Decorative circles -->
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-violet-600/5 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-1/3 right-1/4 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-1/3 right-1/3 w-48 h-48 bg-fuchsia-600/5 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-20 relative z-10">
+      <div class="flex flex-col md:flex-row items-center gap-12">
+
+        <!-- Avatar -->
+        <div class="flex-shrink-0 animate-float">
+          <div class="relative w-48 h-48">
+            <!-- Rotating glow ring -->
+            <div class="absolute inset-0 rounded-full avatar-ring p-0.5">
+              <div class="w-full h-full rounded-full bg-cyber-black"></div>
+            </div>
+            <!-- Avatar image -->
+            <img
+              src="https://avatars.githubusercontent.com/u/29503652?v=4"
+              alt="Felipe Grucci"
+              class="absolute inset-1 w-[calc(100%-8px)] h-[calc(100%-8px)] rounded-full object-cover"
+            />
+            <!-- Status indicator -->
+            <div class="absolute bottom-3 right-3 w-4 h-4 bg-green-400 rounded-full border-2 border-cyber-black shadow-neon-green animate-pulse-neon"></div>
+          </div>
+        </div>
+
+        <!-- Hero text -->
+        <div class="text-center md:text-left">
+          <!-- Terminal prefix -->
+          <div class="font-mono text-sm text-gray-600 mb-2">
+            <span class="text-cyan-500">root@grucci</span><span class="text-gray-600">:</span><span class="text-violet-400">~/blog</span><span class="text-gray-400">$</span>
+            <span class="ml-2 text-gray-500">whoami</span>
+          </div>
+
+          <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-2 glitch-text leading-tight">
+            FELIPE<br/>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-violet-400 to-fuchsia-400">
+              GRUCCI
+            </span>
+          </h1>
+
+          <div class="font-mono text-sm text-cyan-400 mb-4 tracking-widest uppercase">
+            &gt;&gt; Arquiteto de Infraestrutura_<span class="animate-blink">█</span>
+          </div>
+
+          <p class="text-gray-400 text-lg font-body max-w-lg mb-6 leading-relaxed">
+            Trabalhando com <span class="text-cyan-400">Cloud Infrastructure Engineering</span> no
+            <span class="text-fuchsia-400"> Banco Bradesco</span>. Especialista em Terraform, Kubernetes, Azure e muito mais.
+          </p>
+
+          <!-- CTA Buttons -->
+          <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+            <a href="#bio"
+               class="font-mono text-sm uppercase tracking-widest px-6 py-3 clip-corner transition-all duration-300
+                      bg-cyan-500/10 border border-cyan-500/40 text-cyan-400
+                      hover:bg-cyan-500/25 hover:border-cyan-400 hover:shadow-neon-cyan">
+              Ver Bio ↓
+            </a>
+            <a href="#posts"
+               class="font-mono text-sm uppercase tracking-widest px-6 py-3 clip-corner transition-all duration-300
+                      bg-violet-500/10 border border-violet-500/40 text-violet-400
+                      hover:bg-violet-500/25 hover:border-violet-400">
+              Ler Posts ↓
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats row -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-16">
+        <div class="stat-card p-4 text-center clip-corner-sm relative">
+          <div class="font-display text-2xl font-black text-cyan-400">14+</div>
+          <div class="font-mono text-xs text-gray-500 uppercase tracking-wider mt-1">Repositórios</div>
+        </div>
+        <div class="stat-card p-4 text-center clip-corner-sm relative">
+          <div class="font-display text-2xl font-black text-fuchsia-400">Cloud</div>
+          <div class="font-mono text-xs text-gray-500 uppercase tracking-wider mt-1">Arquiteto</div>
+        </div>
+        <div class="stat-card p-4 text-center clip-corner-sm relative">
+          <div class="font-display text-2xl font-black text-violet-400">K8s</div>
+          <div class="font-mono text-xs text-gray-500 uppercase tracking-wider mt-1">Kubernetes</div>
+        </div>
+        <div class="stat-card p-4 text-center clip-corner-sm relative">
+          <div class="font-display text-2xl font-black text-green-400">IaC</div>
+          <div class="font-mono text-xs text-gray-500 uppercase tracking-wider mt-1">Terraform</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ BIO SECTION ══════════ -->
+  <section id="bio" class="py-24 relative">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+
+      <!-- Section header -->
+      <div class="flex items-center gap-4 mb-12">
+        <div class="font-mono text-fuchsia-500 text-sm">[01]</div>
+        <h2 class="font-display text-2xl font-bold text-white uppercase tracking-widest">Sobre Mim</h2>
+        <div class="flex-1 section-divider"></div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+
+        <!-- Bio card -->
+        <div class="neon-border-cyan p-6 clip-corner relative corner-tl corner-br">
+          <div class="font-mono text-xs text-cyan-500/60 mb-4">// bio.json</div>
+          <div class="space-y-4 font-body text-gray-300 leading-relaxed">
+            <p>
+              Sou <span class="text-cyan-400 font-semibold">Felipe Grucci</span>, Arquiteto de Infraestrutura com foco em
+              ambientes cloud de alta disponibilidade e escalabilidade.
+            </p>
+            <p>
+              Atualmente faço parte do time de <span class="text-fuchsia-400">Cloud Infrastructure Engineering</span>
+              no <strong class="text-white">Bradesco</strong>, onde trabalho com automação, orquestração de containers e
+              modernização de infraestrutura.
+            </p>
+            <p>
+              Apaixonado por cultura DevOps, GitOps, automação e pela interseção entre engenharia e negócios.
+            </p>
+          </div>
+
+          <!-- Social links -->
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href="https://github.com/Grucci" target="_blank"
+               class="flex items-center gap-2 cyber-tag hover:!border-cyan-400 transition-all duration-300">
+              <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+              </svg>
+              GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/felipe-grucci-libona/" target="_blank"
+               class="flex items-center gap-2 cyber-tag cyber-tag-pink hover:!border-fuchsia-400 transition-all duration-300">
+              <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <!-- Skills card -->
+        <div class="neon-border-pink p-6 clip-corner relative">
+          <div class="font-mono text-xs text-fuchsia-500/60 mb-4">// skills.yaml</div>
+          <div class="space-y-4">
+            <!-- Skill bars -->
+            <div>
+              <div class="flex justify-between font-mono text-xs mb-1">
+                <span class="text-gray-400">Kubernetes</span>
+                <span class="text-cyan-400">████████░░ 85%</span>
+              </div>
+              <div class="h-1 bg-gray-800 rounded-full overflow-hidden">
+                <div class="skill-bar-fill h-full rounded-full" style="width: 85%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between font-mono text-xs mb-1">
+                <span class="text-gray-400">Terraform</span>
+                <span class="text-fuchsia-400">████████░░ 82%</span>
+              </div>
+              <div class="h-1 bg-gray-800 rounded-full overflow-hidden">
+                <div class="skill-bar-fill h-full rounded-full" style="width: 82%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between font-mono text-xs mb-1">
+                <span class="text-gray-400">Docker</span>
+                <span class="text-violet-400">█████████░ 90%</span>
+              </div>
+              <div class="h-1 bg-gray-800 rounded-full overflow-hidden">
+                <div class="skill-bar-fill h-full rounded-full" style="width: 90%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between font-mono text-xs mb-1">
+                <span class="text-gray-400">Azure</span>
+                <span class="text-cyan-400">███████░░░ 75%</span>
+              </div>
+              <div class="h-1 bg-gray-800 rounded-full overflow-hidden">
+                <div class="skill-bar-fill h-full rounded-full" style="width: 75%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between font-mono text-xs mb-1">
+                <span class="text-gray-400">Git / GitOps</span>
+                <span class="text-green-400">████████░░ 88%</span>
+              </div>
+              <div class="h-1 bg-gray-800 rounded-full overflow-hidden">
+                <div class="skill-bar-fill h-full rounded-full" style="width: 88%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tech tags -->
+          <div class="mt-6">
+            <div class="font-mono text-xs text-gray-600 mb-3">// stack</div>
+            <div class="flex flex-wrap gap-2">
+              <span class="cyber-tag">Kubernetes</span>
+              <span class="cyber-tag">Terraform</span>
+              <span class="cyber-tag">Docker</span>
+              <span class="cyber-tag">Azure</span>
+              <span class="cyber-tag cyber-tag-pink">GitOps</span>
+              <span class="cyber-tag cyber-tag-pink">CI/CD</span>
+              <span class="cyber-tag cyber-tag-violet">Git</span>
+              <span class="cyber-tag cyber-tag-violet">Linux</span>
+              <span class="cyber-tag">Helm</span>
+              <span class="cyber-tag cyber-tag-pink">Cloud</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ POSTS SECTION ══════════ -->
+  <section id="posts" class="py-24 relative">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+
+      <!-- Section header -->
+      <div class="flex items-center gap-4 mb-12">
+        <div class="font-mono text-violet-500 text-sm">[02]</div>
+        <h2 class="font-display text-2xl font-bold text-white uppercase tracking-widest">Posts Recentes</h2>
+        <div class="flex-1 section-divider"></div>
+      </div>
+
+      <!-- Dynamic posts: featured + grid injected by JS -->
+      <div id="featured-post-container"></div>
+      <div id="posts-grid" class="grid md:grid-cols-2 gap-6"></div>
+
+      <!-- Load more -->
+      <div id="load-more-container" class="text-center mt-10 hidden">
+        <button id="load-more-btn"
+          class="font-mono text-sm uppercase tracking-widest px-8 py-3 clip-corner transition-all duration-300
+                 bg-transparent border border-gray-700 text-gray-500
+                 hover:border-cyan-500/50 hover:text-cyan-400 hover:bg-cyan-500/5">
+          Carregar mais posts ↓
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ FOOTER ══════════ -->
+  <footer class="border-t border-gray-800/50 py-10 relative">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="font-mono text-xs text-gray-600">
+          <span class="text-cyan-500">&copy; 2026</span> Felipe Grucci · Construído com <span class="text-fuchsia-500">❤</span> e HTML puro
+        </div>
+        <div class="flex items-center gap-6">
+          <a href="https://github.com/Grucci" target="_blank" class="hover-neon font-mono text-xs text-gray-600 uppercase tracking-wider transition-all duration-300">
+            GitHub
+          </a>
+          <a href="https://www.linkedin.com/in/felipe-grucci-libona/" target="_blank" class="hover-neon font-mono text-xs text-gray-600 uppercase tracking-wider transition-all duration-300">
+            LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Mobile menu ──────────────────────────────────────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const hamIcon = document.getElementById('ham-icon');
+
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+      const isOpen = mobileMenu.classList.contains('open');
+      hamIcon.setAttribute('d', isOpen
+        ? 'M6 18L18 6M6 6l12 12'
+        : 'M4 6h16M4 12h16M4 18h16'
+      );
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        hamIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+      });
+    });
+
+    // ── Smooth scroll ────────────────────────────────────────────────────────
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // ── Skill bars animation ─────────────────────────────────────────────────
+    const skillBars = document.querySelectorAll('.skill-bar-fill');
+    const skillWidths = [];
+    skillBars.forEach(bar => {
+      skillWidths.push(bar.style.width);
+      bar.style.width = '0%';
+    });
+
+    const skillObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          skillBars.forEach((bar, i) => {
+            setTimeout(() => { bar.style.width = skillWidths[i]; }, i * 100);
+          });
+          skillObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.3 });
+
+    const skillSection = document.querySelector('#bio');
+    if (skillSection) skillObserver.observe(skillSection);
+
+    // ── Posts: load from index.json ──────────────────────────────────────────
+    const TAG_CLASSES = {
+      'Kubernetes': '', 'Cloud': '', 'Docker': '',
+      'Terraform': 'cyber-tag-pink', 'IaC': 'cyber-tag-pink', 'CI/CD': 'cyber-tag-pink',
+      'GitOps': 'cyber-tag-pink', 'DevOps': 'cyber-tag-pink',
+      'Azure': 'cyber-tag-green', 'Git': 'cyber-tag-violet', 'Linux': 'cyber-tag-violet',
+    };
+
+    function tagClass(tag) {
+      return TAG_CLASSES[tag] ?? 'cyber-tag-violet';
+    }
+
+    function formatDate(dateStr) {
+      const [y, m, d] = dateStr.split('-').map(Number);
+      const months = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+      return `${String(d).padStart(2,'0')} ${months[m-1]} ${y}`;
+    }
+
+    function buildFeaturedCard(post) {
+      const tags = (post.tags || []).map(t =>
+        `<span class="cyber-tag ${tagClass(t)}">${t}</span>`
+      ).join('');
+      return `
+        <a href="post.html?post=${post.slug}" class="block mb-8 group">
+          <div class="post-card neon-border-cyan p-6 clip-corner relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+              <div class="flex-shrink-0">
+                <div class="w-12 h-12 bg-cyan-500/10 border border-cyan-500/30 clip-corner-sm flex items-center justify-center group-hover:bg-cyan-500/20 transition-all duration-300">
+                  <span class="text-xl">${post.emoji || '📝'}</span>
+                </div>
+              </div>
+              <div class="flex-1">
+                <div class="flex flex-wrap items-center gap-3 mb-2">
+                  <span class="font-mono text-xs text-gray-600">${formatDate(post.date)}</span>
+                  ${tags}
+                  <span class="font-mono text-xs text-cyan-500 bg-cyan-500/10 px-2 py-0.5 border border-cyan-500/30">DESTAQUE</span>
+                </div>
+                <h3 class="font-display text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors duration-300">${post.title}</h3>
+                <p class="text-gray-400 text-base leading-relaxed">${post.summary}</p>
+                <div class="mt-4 font-mono text-sm text-cyan-400 group-hover:text-cyan-300 transition-colors duration-300">
+                  Ler mais <span class="group-hover:ml-2 transition-all duration-300">→</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>`;
+    }
+
+    // Card colors cycling for non-featured posts
+    const cardStyles = [
+      { border: 'neon-border-pink', iconBg: 'bg-fuchsia-500/10 border-fuchsia-500/30', hoverBg: 'group-hover:bg-fuchsia-500/20', textHover: 'group-hover:text-fuchsia-400', readMore: 'text-fuchsia-400 group-hover:text-fuchsia-300' },
+      { border: '', borderStyle: 'border: 1px solid rgba(123,47,255,0.3); box-shadow: 0 0 5px rgba(123,47,255,0.15);', iconBg: 'bg-violet-500/10 border-violet-500/30', hoverBg: 'group-hover:bg-violet-500/20', textHover: 'group-hover:text-violet-400', readMore: 'text-violet-400 group-hover:text-violet-300' },
+      { border: '', borderStyle: 'border: 1px solid rgba(0,255,136,0.2);', iconBg: 'bg-green-500/10 border-green-500/30', hoverBg: '', textHover: 'group-hover:text-green-400', readMore: 'text-green-400 group-hover:text-green-300' },
+      { border: 'neon-border-cyan', iconBg: 'bg-cyan-500/10 border-cyan-500/30', hoverBg: 'group-hover:bg-cyan-500/20', textHover: 'group-hover:text-cyan-400', readMore: 'text-cyan-400 group-hover:text-cyan-300' },
+    ];
+
+    function buildGridCard(post, idx) {
+      const style = cardStyles[idx % cardStyles.length];
+      const tags = (post.tags || []).map(t =>
+        `<span class="cyber-tag ${tagClass(t)}">${t}</span>`
+      ).join('');
+      const inlineStyle = style.borderStyle ? `style="${style.borderStyle} transition: all 0.3s ease;"` : '';
+      return `
+        <a href="post.html?post=${post.slug}" class="block group">
+          <div class="post-card ${style.border} p-5 clip-corner h-full" ${inlineStyle}>
+            <div class="flex items-start gap-3 mb-3">
+              <div class="w-10 h-10 ${style.iconBg} clip-corner-sm flex items-center justify-center flex-shrink-0 ${style.hoverBg} transition-all duration-300">
+                <span class="text-lg">${post.emoji || '📝'}</span>
+              </div>
+              <div>
+                <div class="font-mono text-xs text-gray-600 mb-1">${formatDate(post.date)}</div>
+                <div class="flex flex-wrap gap-2">${tags}</div>
+              </div>
+            </div>
+            <h3 class="font-display text-lg font-bold text-white mb-2 ${style.textHover} transition-colors duration-300">${post.title}</h3>
+            <p class="text-gray-500 text-sm leading-relaxed">${post.summary}</p>
+            <div class="mt-4 font-mono text-xs ${style.readMore} transition-colors duration-300">Ler mais →</div>
+          </div>
+        </a>`;
+    }
+
+    const PAGE_SIZE = 4; // posts per page (grid, not counting featured)
+    let allPosts = [];
+    let shownCount = 0;
+
+    async function loadPosts() {
+      try {
+        const resp = await fetch('posts/index.json');
+        allPosts = await resp.json();
+
+        const featured = allPosts.find(p => p.featured);
+        const rest = allPosts.filter(p => !p.featured);
+
+        if (featured) {
+          document.getElementById('featured-post-container').innerHTML = buildFeaturedCard(featured);
+        }
+
+        shownCount = 0;
+        renderNextPage(rest);
+
+        document.getElementById('load-more-btn').addEventListener('click', () => renderNextPage(rest));
+
+        // Post card hover glow
+        attachCardHover();
+      } catch (err) {
+        console.error('Erro ao carregar posts:', err);
+        document.getElementById('posts-grid').innerHTML =
+          `<div class="col-span-2 text-center font-mono text-xs text-red-400 py-8">Erro ao carregar posts.</div>`;
+      }
+    }
+
+    function renderNextPage(rest) {
+      const slice = rest.slice(shownCount, shownCount + PAGE_SIZE);
+      const grid = document.getElementById('posts-grid');
+      slice.forEach((post, i) => {
+        const div = document.createElement('div');
+        div.innerHTML = buildGridCard(post, shownCount + i);
+        grid.appendChild(div.firstElementChild);
+      });
+      shownCount += slice.length;
+
+      const loadMoreContainer = document.getElementById('load-more-container');
+      if (shownCount < rest.length) {
+        loadMoreContainer.classList.remove('hidden');
+      } else {
+        loadMoreContainer.classList.add('hidden');
+      }
+
+      attachCardHover();
+    }
+
+    function attachCardHover() {
+      document.querySelectorAll('.post-card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+          this.style.background = 'rgba(13, 13, 26, 0.95)';
+        });
+        card.addEventListener('mouseleave', function() {
+          this.style.background = 'rgba(13, 13, 26, 0.8)';
+        });
+      });
+    }
+
+    loadPosts();
+  </script>
+</body>
+</html>

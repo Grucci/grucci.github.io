@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="page-title">Post · Felipe Grucci</title>
+  <meta name="description" id="page-desc" content="Blog pessoal de Felipe Grucci – Arquiteto de Infraestrutura Cloud." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- marked.js + front-matter parser -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            mono: ['"Share Tech Mono"', 'monospace'],
+            body: ['Rajdhani', 'sans-serif'],
+            display: ['Orbitron', 'sans-serif'],
+          },
+          colors: {
+            cyber: { black: '#0a0a0f', dark: '#0d0d1a' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      background-color: #0a0a0f;
+      font-family: 'Rajdhani', sans-serif;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.3), transparent);
+      animation: scan 6s linear infinite;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    @keyframes scan {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100vh); }
+    }
+    @keyframes glitch {
+      0%, 100% { text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff; }
+      25% { text-shadow: -2px 0 #ff00ff, 2px 0 #00ffff; }
+      50% { text-shadow: 2px 2px #ff00ff, -2px -2px #00ffff; }
+      75% { text-shadow: -2px -2px #ff00ff, 2px 2px #00ffff; }
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0a0a0f; }
+    ::-webkit-scrollbar-thumb { background: #00ffff44; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #00ffff88; }
+
+    .navbar-blur {
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 255, 255, 0.12);
+    }
+    .clip-corner {
+      clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+    }
+    .clip-corner-sm {
+      clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+    }
+    .cyber-tag {
+      background: rgba(0, 255, 255, 0.08);
+      border: 1px solid rgba(0, 255, 255, 0.25);
+      color: #00ffff;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      padding: 2px 10px;
+      clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+    }
+    .cyber-tag-pink {
+      background: rgba(255, 0, 255, 0.08);
+      border: 1px solid rgba(255, 0, 255, 0.25);
+      color: #ff00ff;
+    }
+    .cyber-tag-violet {
+      background: rgba(123, 47, 255, 0.08);
+      border: 1px solid rgba(123, 47, 255, 0.35);
+      color: #a855f7;
+    }
+    .cyber-tag-green {
+      background: rgba(0, 255, 136, 0.08);
+      border: 1px solid rgba(0, 255, 136, 0.25);
+      color: #00ff88;
+    }
+    a.hover-neon { transition: color 0.3s ease, text-shadow 0.3s ease; }
+    a.hover-neon:hover { color: #00ffff; text-shadow: 0 0 8px rgba(0, 255, 255, 0.7); }
+
+    #mobile-menu {
+      transition: max-height 0.4s ease, opacity 0.4s ease;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+    }
+    #mobile-menu.open { max-height: 400px; opacity: 1; }
+
+    /* ── Prose styles for rendered Markdown ── */
+    .prose-cyber {
+      color: #9ca3af;
+      line-height: 1.8;
+      font-size: 1.1rem;
+    }
+    .prose-cyber h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #ffffff;
+      margin: 0 0 1.5rem;
+      display: none; /* title shown in hero */
+    }
+    .prose-cyber h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .prose-cyber h3 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #00ffff;
+      margin: 2rem 0 0.75rem;
+    }
+    .prose-cyber h4 {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.95rem;
+      color: #a78bfa;
+      margin: 1.5rem 0 0.5rem;
+    }
+    .prose-cyber p { margin: 1.25rem 0; color: #9ca3af; }
+    .prose-cyber strong { color: #e2e8f0; font-weight: 700; }
+    .prose-cyber em { color: #a78bfa; font-style: italic; }
+    .prose-cyber ul {
+      list-style: none;
+      margin: 1.25rem 0;
+      padding: 0;
+    }
+    .prose-cyber ul li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin: 0.5rem 0;
+      color: #9ca3af;
+    }
+    .prose-cyber ul li::before {
+      content: '▶';
+      position: absolute;
+      left: 0;
+      color: #00ffff;
+      font-size: 0.6rem;
+      top: 0.35em;
+    }
+    .prose-cyber ol {
+      list-style: none;
+      margin: 1.25rem 0;
+      padding: 0;
+      counter-reset: cyber-counter;
+    }
+    .prose-cyber ol li {
+      counter-increment: cyber-counter;
+      position: relative;
+      padding-left: 2rem;
+      margin: 0.75rem 0;
+      color: #9ca3af;
+    }
+    .prose-cyber ol li::before {
+      content: counter(cyber-counter, decimal-leading-zero);
+      position: absolute;
+      left: 0;
+      color: #ff00ff;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.85rem;
+    }
+    .prose-cyber code {
+      font-family: 'Share Tech Mono', monospace;
+      background: rgba(0, 255, 255, 0.07);
+      border: 1px solid rgba(0, 255, 255, 0.2);
+      color: #00ffff;
+      padding: 0.15em 0.5em;
+      border-radius: 2px;
+      font-size: 0.88em;
+    }
+    .prose-cyber pre {
+      background: rgba(10, 10, 15, 0.95);
+      border: 1px solid rgba(0, 255, 255, 0.2);
+      border-left: 3px solid #00ffff;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      overflow-x: auto;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #a5f3fc;
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.05), inset 0 0 30px rgba(0, 0, 0, 0.5);
+    }
+    .prose-cyber pre code {
+      background: none;
+      border: none;
+      padding: 0;
+      color: inherit;
+    }
+    .prose-cyber blockquote {
+      border-left: 3px solid #ff00ff;
+      background: rgba(255, 0, 255, 0.05);
+      margin: 1.5rem 0;
+      padding: 1rem 1.5rem;
+      color: #d1d5db;
+      font-style: italic;
+    }
+    .prose-cyber a {
+      color: #00ffff;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+      transition: all 0.2s ease;
+    }
+    .prose-cyber a:hover {
+      color: #fff;
+      border-bottom-color: #00ffff;
+      text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+    }
+    .prose-cyber hr {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.4), rgba(255, 0, 255, 0.4), transparent);
+      margin: 2.5rem 0;
+    }
+    .prose-cyber table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.85rem;
+    }
+    .prose-cyber th {
+      text-align: left;
+      padding: 0.6rem 1rem;
+      background: rgba(0, 255, 255, 0.08);
+      border: 1px solid rgba(0, 255, 255, 0.2);
+      color: #00ffff;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .prose-cyber td {
+      padding: 0.6rem 1rem;
+      border: 1px solid rgba(0, 255, 255, 0.1);
+      color: #9ca3af;
+    }
+    .prose-cyber tr:nth-child(even) td {
+      background: rgba(0, 255, 255, 0.02);
+    }
+
+    /* TOC */
+    .toc-item {
+      display: block;
+      padding: 0.4rem 0.75rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.78rem;
+      color: #6b7280;
+      border-left: 2px solid transparent;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .toc-item:hover { color: #00ffff; border-left-color: #00ffff; background: rgba(0, 255, 255, 0.05); }
+    .toc-item.active { color: #00ffff; border-left-color: #00ffff; }
+    .toc-item.toc-h3 { padding-left: 1.5rem; font-size: 0.72rem; }
+
+    /* Reading progress bar */
+    #reading-progress {
+      position: fixed;
+      top: 64px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: linear-gradient(90deg, #7b2fff, #00ffff, #ff00ff);
+      z-index: 49;
+      transition: width 0.1s ease;
+      box-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+    }
+
+    /* Share button */
+    .share-btn {
+      background: rgba(13, 13, 26, 0.6);
+      border: 1px solid rgba(0, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+    .share-btn:hover {
+      border-color: rgba(0, 255, 255, 0.6);
+      background: rgba(0, 255, 255, 0.08);
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+    }
+
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.4), rgba(255, 0, 255, 0.4), transparent);
+    }
+
+    .glitch-text { animation: glitch 3s infinite; }
+
+    /* Loading state */
+    .loading-skeleton {
+      background: linear-gradient(90deg, rgba(0,255,255,0.05) 25%, rgba(0,255,255,0.1) 50%, rgba(0,255,255,0.05) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 2px;
+    }
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Error state */
+    .error-state {
+      border: 1px solid rgba(255, 0, 110, 0.3);
+      background: rgba(255, 0, 110, 0.05);
+    }
+  </style>
+</head>
+<body class="text-gray-300 min-h-screen relative">
+
+  <!-- Reading Progress Bar -->
+  <div id="reading-progress"></div>
+
+  <!-- ══════════ NAVBAR ══════════ -->
+  <nav class="navbar-blur fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-16">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="w-8 h-8 flex items-center justify-center bg-cyan-500/10 border border-cyan-500/40 clip-corner-sm group-hover:bg-cyan-500/20 transition-all duration-300">
+            <span class="text-cyan-400 font-display font-bold text-sm">FG</span>
+          </div>
+          <span class="font-display text-sm font-bold text-cyan-400 tracking-widest uppercase">
+            GRUCCI<span class="text-fuchsia-400">.</span>DEV
+          </span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="hidden md:flex items-center gap-8">
+          <a href="index.html" class="hover-neon text-gray-400 font-mono text-sm tracking-wide uppercase transition-all duration-300">
+            <span class="text-cyan-500 mr-1">./</span>Home
+          </a>
+          <a href="index.html#bio" class="hover-neon text-gray-400 font-mono text-sm tracking-wide uppercase transition-all duration-300">
+            <span class="text-fuchsia-500 mr-1">./</span>Bio
+          </a>
+          <a href="index.html#posts" class="hover-neon text-gray-400 font-mono text-sm tracking-wide uppercase transition-all duration-300">
+            <span class="text-violet-500 mr-1">./</span>Posts
+          </a>
+          <a href="https://github.com/Grucci" target="_blank" class="hover-neon text-gray-400 font-mono text-sm tracking-wide uppercase transition-all duration-300">
+            <span class="text-cyan-500 mr-1">~/</span>GitHub
+          </a>
+          <a href="https://www.linkedin.com/in/felipe-grucci-libona/" target="_blank"
+             class="font-mono text-xs uppercase tracking-widest px-4 py-2 clip-corner-sm transition-all duration-300
+                    bg-fuchsia-500/10 border border-fuchsia-500/40 text-fuchsia-400
+                    hover:bg-fuchsia-500/25 hover:border-fuchsia-400">
+            LinkedIn ↗
+          </a>
+        </div>
+
+        <!-- Mobile hamburger -->
+        <button id="hamburger" class="md:hidden text-cyan-400 focus:outline-none" aria-label="Toggle menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path id="ham-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden border-t border-cyan-500/10">
+      <div class="px-4 py-4 space-y-3" style="background: rgba(10,10,15,0.95)">
+        <a href="index.html" class="block font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors py-2 border-b border-gray-800">
+          <span class="text-cyan-500">./</span> Home
+        </a>
+        <a href="index.html#bio" class="block font-mono text-sm text-gray-400 hover:text-fuchsia-400 transition-colors py-2 border-b border-gray-800">
+          <span class="text-fuchsia-500">./</span> Bio
+        </a>
+        <a href="index.html#posts" class="block font-mono text-sm text-gray-400 hover:text-violet-400 transition-colors py-2 border-b border-gray-800">
+          <span class="text-violet-500">./</span> Posts
+        </a>
+        <a href="https://github.com/Grucci" target="_blank" class="block font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors py-2 border-b border-gray-800">
+          <span class="text-cyan-500">~/</span> GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/felipe-grucci-libona/" target="_blank" class="block font-mono text-sm text-fuchsia-400 hover:text-fuchsia-300 transition-colors py-2">
+          LinkedIn ↗
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══════════ POST HERO ══════════ -->
+  <section id="post-hero" class="pt-24 pb-10 relative overflow-hidden" style="background: radial-gradient(ellipse at 30% 40%, rgba(123,47,255,0.12) 0%, transparent 50%), radial-gradient(ellipse at 70% 20%, rgba(0,255,255,0.08) 0%, transparent 40%), linear-gradient(135deg, #0a0a0f 0%, #0d0d1a 100%);">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute top-20 left-10 w-64 h-64 bg-violet-600/5 rounded-full blur-3xl"></div>
+      <div class="absolute bottom-0 right-20 w-48 h-48 bg-cyan-500/5 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
+      <!-- Breadcrumb -->
+      <div class="font-mono text-xs text-gray-600 mb-6 flex items-center gap-2 flex-wrap">
+        <a href="index.html" class="hover:text-cyan-400 transition-colors">~/home</a>
+        <span class="text-gray-700">/</span>
+        <a href="index.html#posts" class="hover:text-cyan-400 transition-colors">posts</a>
+        <span class="text-gray-700">/</span>
+        <span id="breadcrumb-slug" class="text-gray-500">...</span>
+      </div>
+
+      <!-- Tags -->
+      <div id="post-tags" class="flex flex-wrap gap-2 mb-6">
+        <div class="loading-skeleton h-5 w-20"></div>
+        <div class="loading-skeleton h-5 w-16"></div>
+      </div>
+
+      <!-- Post title -->
+      <h1 id="post-title" class="font-display text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight mb-6 glitch-text">
+        <div class="loading-skeleton h-12 w-3/4 mb-3"></div>
+        <div class="loading-skeleton h-10 w-1/2"></div>
+      </h1>
+
+      <!-- Summary -->
+      <p id="post-summary" class="text-gray-400 text-xl leading-relaxed mb-8 max-w-2xl">
+        <span class="loading-skeleton block h-5 w-full mb-2"></span>
+        <span class="loading-skeleton block h-5 w-4/5"></span>
+      </p>
+
+      <!-- Author + meta -->
+      <div class="flex flex-col sm:flex-row sm:items-center gap-4 pb-8 border-b border-gray-800/60">
+        <div class="flex items-center gap-3">
+          <img
+            src="https://avatars.githubusercontent.com/u/29503652?v=4"
+            alt="Felipe Grucci"
+            class="w-10 h-10 rounded-full border-2 border-cyan-500/40"
+          />
+          <div>
+            <div class="font-semibold text-white text-sm">Felipe Grucci</div>
+            <div class="font-mono text-xs text-gray-500">Arquiteto de Infraestrutura</div>
+          </div>
+        </div>
+        <div class="sm:ml-auto flex flex-wrap items-center gap-4 font-mono text-xs text-gray-600">
+          <span class="flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-cyan-500/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            <span id="post-date">...</span>
+          </span>
+          <span class="flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-fuchsia-500/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <span id="post-read-time">...</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ MAIN CONTENT ══════════ -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-12 relative z-10">
+    <div class="flex gap-8">
+
+      <!-- ── Article ── -->
+      <article class="flex-1 min-w-0">
+
+        <!-- Content area -->
+        <div id="post-content" class="prose-cyber">
+          <!-- Loading skeleton -->
+          <div class="space-y-4">
+            <div class="loading-skeleton h-4 w-full"></div>
+            <div class="loading-skeleton h-4 w-11/12"></div>
+            <div class="loading-skeleton h-4 w-4/5"></div>
+            <div class="loading-skeleton h-8 w-1/3 mt-8"></div>
+            <div class="loading-skeleton h-4 w-full"></div>
+            <div class="loading-skeleton h-4 w-full"></div>
+            <div class="loading-skeleton h-4 w-3/4"></div>
+          </div>
+        </div>
+
+        <!-- Post navigation -->
+        <div id="post-nav" class="mt-16 pt-8 border-t border-gray-800/50 hidden">
+          <div class="flex flex-col sm:flex-row gap-4">
+            <div id="nav-prev" class="flex-1"></div>
+            <div id="nav-next" class="flex-1"></div>
+          </div>
+        </div>
+
+        <!-- Author card -->
+        <div class="mt-12 p-6 clip-corner" style="background: rgba(13,13,26,0.8); border: 1px solid rgba(123,47,255,0.25);">
+          <div class="flex flex-col sm:flex-row gap-5">
+            <img
+              src="https://avatars.githubusercontent.com/u/29503652?v=4"
+              alt="Felipe Grucci"
+              class="w-16 h-16 rounded-full border-2 border-violet-500/40 flex-shrink-0"
+            />
+            <div>
+              <div class="font-mono text-xs text-gray-600 mb-1">// sobre o autor</div>
+              <h3 class="font-display text-lg font-bold text-white mb-1">Felipe Grucci</h3>
+              <div class="font-mono text-xs text-cyan-400 mb-3">Arquiteto de Infraestrutura · Bradesco</div>
+              <p class="text-gray-500 text-sm leading-relaxed mb-4">
+                Trabalhando com Cloud Infrastructure Engineering, especializado em Kubernetes, Terraform e Azure.
+                Apaixonado por DevOps, automação e cultura de engenharia de confiabilidade.
+              </p>
+              <div class="flex gap-3">
+                <a href="https://github.com/Grucci" target="_blank" class="cyber-tag hover:!border-cyan-400 transition-all duration-300 flex items-center gap-1.5">
+                  <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+                  </svg>
+                  GitHub
+                </a>
+                <a href="https://www.linkedin.com/in/felipe-grucci-libona/" target="_blank" class="cyber-tag cyber-tag-pink hover:!border-fuchsia-400 transition-all duration-300 flex items-center gap-1.5">
+                  <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                  LinkedIn
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ── Sidebar (TOC + Share) ── -->
+      <aside class="hidden lg:block w-64 flex-shrink-0">
+        <div class="sticky top-24">
+          <!-- TOC -->
+          <div class="clip-corner-sm mb-6" style="background: rgba(13,13,26,0.8); border: 1px solid rgba(0,255,255,0.12);">
+            <div class="p-4 border-b border-gray-800/50">
+              <div class="font-mono text-xs text-cyan-500/60">// índice</div>
+            </div>
+            <nav class="py-2" id="toc">
+              <div class="px-4 py-2 font-mono text-xs text-gray-700">Carregando...</div>
+            </nav>
+          </div>
+
+          <!-- Share buttons -->
+          <div class="clip-corner-sm" style="background: rgba(13,13,26,0.8); border: 1px solid rgba(255,0,255,0.12);">
+            <div class="p-4 border-b border-gray-800/50">
+              <div class="font-mono text-xs text-fuchsia-500/60">// compartilhar</div>
+            </div>
+            <div class="p-4 space-y-2">
+              <button id="share-twitter" class="share-btn w-full text-left px-3 py-2 clip-corner-sm font-mono text-xs text-gray-400 flex items-center gap-2">
+                <span class="text-sky-400">✕</span> Twitter / X
+              </button>
+              <button id="share-linkedin" class="share-btn w-full text-left px-3 py-2 clip-corner-sm font-mono text-xs text-gray-400 flex items-center gap-2">
+                <span class="text-blue-400">in</span> LinkedIn
+              </button>
+              <button id="copy-btn" class="share-btn w-full text-left px-3 py-2 clip-corner-sm font-mono text-xs text-gray-400 flex items-center gap-2">
+                <span class="text-cyan-400">#</span> Copiar link
+              </button>
+            </div>
+          </div>
+
+          <!-- Back to posts -->
+          <a href="index.html#posts" class="mt-4 block text-center font-mono text-xs text-gray-600 hover:text-cyan-400 transition-colors duration-300 py-3">
+            ← Voltar aos posts
+          </a>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- ══════════ FOOTER ══════════ -->
+  <footer class="border-t border-gray-800/50 py-10 mt-8 relative z-10">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="font-mono text-xs text-gray-600">
+          <span class="text-cyan-500">&copy; 2026</span> Felipe Grucci · Construído com <span class="text-fuchsia-500">❤</span> e HTML puro
+        </div>
+        <div class="flex items-center gap-6">
+          <a href="https://github.com/Grucci" target="_blank" class="hover-neon font-mono text-xs text-gray-600 uppercase tracking-wider transition-all duration-300">
+            GitHub
+          </a>
+          <a href="https://www.linkedin.com/in/felipe-grucci-libona/" target="_blank" class="hover-neon font-mono text-xs text-gray-600 uppercase tracking-wider transition-all duration-300">
+            LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Helpers ──────────────────────────────────────────────────────────────
+
+    /** Parse YAML-like front-matter block from Markdown string */
+    function parseFrontMatter(raw) {
+      const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
+      if (!match) return { meta: {}, content: raw };
+
+      const fmLines = match[1].split('\n');
+      const meta = {};
+      fmLines.forEach(line => {
+        const colonIdx = line.indexOf(':');
+        if (colonIdx === -1) return;
+        const key = line.slice(0, colonIdx).trim();
+        let val = line.slice(colonIdx + 1).trim();
+
+        // Array: ["a", "b"]
+        if (val.startsWith('[')) {
+          try { val = JSON.parse(val.replace(/'/g, '"')); } catch { val = val.slice(1,-1).split(',').map(s=>s.trim().replace(/['"]/g,'')); }
+        } else {
+          // Boolean
+          if (val === 'true') val = true;
+          else if (val === 'false') val = false;
+          // Strip quotes
+          else val = val.replace(/^["']|["']$/g, '');
+        }
+        meta[key] = val;
+      });
+      return { meta, content: match[2] };
+    }
+
+    /** Format date string to pt-BR */
+    function formatDate(dateStr) {
+      const [y, m, d] = dateStr.split('-').map(Number);
+      const months = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+      return `${String(d).padStart(2,'0')} ${months[m-1]} ${y}`;
+    }
+
+    /** Estimate reading time */
+    function readingTime(text) {
+      const words = text.trim().split(/\s+/).length;
+      const mins = Math.max(1, Math.round(words / 200));
+      return `${mins} min de leitura`;
+    }
+
+    /** Tag color class based on tag name */
+    function tagClass(tag) {
+      const map = {
+        'Kubernetes': '', 'Cloud': '', 'Docker': '',
+        'Terraform': 'cyber-tag-pink', 'IaC': 'cyber-tag-pink', 'CI/CD': 'cyber-tag-pink',
+        'GitOps': 'cyber-tag-pink', 'DevOps': 'cyber-tag-pink',
+        'Azure': 'cyber-tag-green', 'Git': 'cyber-tag-violet', 'Linux': 'cyber-tag-violet',
+      };
+      return map[tag] ?? 'cyber-tag-violet';
+    }
+
+    // ── URL param ────────────────────────────────────────────────────────────
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get('post');
+
+    if (!slug) {
+      // No slug — redirect to index
+      window.location.href = 'index.html#posts';
+    }
+
+    // ── Load post ────────────────────────────────────────────────────────────
+    let allPosts = [];
+
+    async function loadPost() {
+      try {
+        // Load manifest to get sibling posts for navigation
+        const indexResp = await fetch('posts/index.json');
+        allPosts = await indexResp.json();
+
+        // Load the markdown file
+        const mdResp = await fetch(`posts/${slug}.md`);
+        if (!mdResp.ok) throw new Error(`Post not found: ${slug}`);
+        const raw = await mdResp.text();
+        const { meta, content } = parseFrontMatter(raw);
+
+        // ── Update page metadata ──
+        const title = meta.title || slug;
+        document.getElementById('page-title').textContent = `${title} · Felipe Grucci`;
+        document.getElementById('page-desc').setAttribute('content', meta.summary || title);
+
+        // ── Breadcrumb ──
+        document.getElementById('breadcrumb-slug').textContent = slug;
+
+        // ── Tags ──
+        const tagsEl = document.getElementById('post-tags');
+        if (meta.tags && meta.tags.length) {
+          tagsEl.innerHTML = meta.tags.map(t =>
+            `<span class="cyber-tag ${tagClass(t)}">${t}</span>`
+          ).join('') + (meta.featured ? `<span class="font-mono text-xs text-cyan-500 bg-cyan-500/10 px-2 py-0.5 border border-cyan-500/30">DESTAQUE</span>` : '');
+        } else {
+          tagsEl.innerHTML = '';
+        }
+
+        // ── Title ──
+        const titleEl = document.getElementById('post-title');
+        titleEl.innerHTML = `<span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-violet-400 to-fuchsia-400">${title}</span>`;
+
+        // ── Summary ──
+        document.getElementById('post-summary').textContent = meta.summary || '';
+
+        // ── Date & read time ──
+        document.getElementById('post-date').textContent = meta.date ? formatDate(meta.date) : '';
+        document.getElementById('post-read-time').textContent = readingTime(content);
+
+        // ── Render Markdown ──
+        marked.setOptions({
+          breaks: true,
+          gfm: true,
+        });
+        const html = marked.parse(content);
+        const contentEl = document.getElementById('post-content');
+        contentEl.innerHTML = html;
+
+        // Add IDs to headings for TOC + anchor linking
+        contentEl.querySelectorAll('h2, h3').forEach(h => {
+          if (!h.id) {
+            h.id = h.textContent
+              .toLowerCase()
+              .replace(/[^\w\s-]/g, '')
+              .replace(/\s+/g, '-')
+              .replace(/-+/g, '-')
+              .trim();
+          }
+        });
+
+        // ── Build TOC ──
+        buildTOC(contentEl);
+
+        // ── Post navigation ──
+        buildNavigation(allPosts, slug);
+
+        // ── TOC active state observer ──
+        setupTOCObserver();
+
+      } catch (err) {
+        console.error(err);
+        document.getElementById('post-content').innerHTML = `
+          <div class="error-state p-6 clip-corner text-center">
+            <div class="font-mono text-xs text-red-400 mb-2">// erro 404</div>
+            <h2 class="font-display text-xl text-white mb-3">Post não encontrado</h2>
+            <p class="text-gray-500 mb-6">O post <code class="text-red-400">${slug}</code> não existe ou foi movido.</p>
+            <a href="index.html#posts" class="font-mono text-sm text-cyan-400 hover:text-cyan-300 transition-colors">
+              ← Voltar aos posts
+            </a>
+          </div>
+        `;
+        document.getElementById('post-title').innerHTML = '<span class="text-red-400">Post não encontrado</span>';
+        document.getElementById('post-tags').innerHTML = '';
+        document.getElementById('post-summary').textContent = '';
+        document.getElementById('post-date').textContent = '';
+        document.getElementById('post-read-time').textContent = '';
+      }
+    }
+
+    function buildTOC(contentEl) {
+      const headings = contentEl.querySelectorAll('h2, h3');
+      const toc = document.getElementById('toc');
+      if (!headings.length) {
+        toc.innerHTML = '<div class="px-4 py-2 font-mono text-xs text-gray-700">Sem seções</div>';
+        return;
+      }
+      toc.innerHTML = Array.from(headings).map(h => {
+        const isH3 = h.tagName === 'H3';
+        return `<a href="#${h.id}" class="toc-item${isH3 ? ' toc-h3' : ''}" data-id="${h.id}">${h.textContent}</a>`;
+      }).join('');
+    }
+
+    function buildNavigation(posts, currentSlug) {
+      const idx = posts.findIndex(p => p.slug === currentSlug);
+      if (idx === -1) return;
+
+      const prevPost = idx < posts.length - 1 ? posts[idx + 1] : null; // older
+      const nextPost = idx > 0 ? posts[idx - 1] : null; // newer
+
+      const navEl = document.getElementById('post-nav');
+      navEl.classList.remove('hidden');
+
+      if (prevPost) {
+        document.getElementById('nav-prev').innerHTML = `
+          <a href="post.html?post=${prevPost.slug}" class="block p-4 clip-corner-sm group transition-all duration-300"
+             style="background: rgba(13,13,26,0.6); border: 1px solid rgba(0,255,255,0.15);">
+            <div class="font-mono text-xs text-gray-600 mb-1">← Anterior</div>
+            <div class="font-display text-sm text-white group-hover:text-cyan-400 transition-colors duration-300">${prevPost.title}</div>
+          </a>`;
+      }
+
+      if (nextPost) {
+        document.getElementById('nav-next').innerHTML = `
+          <a href="post.html?post=${nextPost.slug}" class="block p-4 clip-corner-sm text-right group transition-all duration-300"
+             style="background: rgba(13,13,26,0.6); border: 1px solid rgba(255,0,255,0.15);">
+            <div class="font-mono text-xs text-gray-600 mb-1">Próximo →</div>
+            <div class="font-display text-sm text-white group-hover:text-fuchsia-400 transition-colors duration-300">${nextPost.title}</div>
+          </a>`;
+      }
+    }
+
+    function setupTOCObserver() {
+      const tocLinks = document.querySelectorAll('#toc a');
+      const headings = document.querySelectorAll('#post-content h2, #post-content h3');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(link => link.classList.remove('active'));
+            const activeLink = document.querySelector(`#toc a[data-id="${entry.target.id}"]`);
+            if (activeLink) activeLink.classList.add('active');
+          }
+        });
+      }, { rootMargin: '-20% 0% -70% 0%' });
+
+      headings.forEach(h => observer.observe(h));
+    }
+
+    // ── Mobile menu ──────────────────────────────────────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const hamIcon = document.getElementById('ham-icon');
+
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+      const isOpen = mobileMenu.classList.contains('open');
+      hamIcon.setAttribute('d', isOpen
+        ? 'M6 18L18 6M6 6l12 12'
+        : 'M4 6h16M4 12h16M4 18h16'
+      );
+    });
+
+    // ── Reading progress bar ─────────────────────────────────────────────────
+    const progressBar = document.getElementById('reading-progress');
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      progressBar.style.width = progress + '%';
+    });
+
+    // ── Share buttons ────────────────────────────────────────────────────────
+    document.getElementById('share-twitter').addEventListener('click', () => {
+      const url = encodeURIComponent(window.location.href);
+      const text = encodeURIComponent(document.getElementById('page-title').textContent);
+      window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+    });
+
+    document.getElementById('share-linkedin').addEventListener('click', () => {
+      const url = encodeURIComponent(window.location.href);
+      window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
+    });
+
+    document.getElementById('copy-btn').addEventListener('click', () => {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        const btn = document.getElementById('copy-btn');
+        btn.innerHTML = '<span class="text-green-400">✓</span> Copiado!';
+        setTimeout(() => {
+          btn.innerHTML = '<span class="text-cyan-400">#</span> Copiar link';
+        }, 2000);
+      });
+    });
+
+    // ── Boot ────────────────────────────────────────────────────────────────
+    loadPost();
+  </script>
+</body>
+</html>
