@@ -45,6 +45,7 @@
       pointer-events: none;
       z-index: 0;
     }
+    /* Scanline moving effect (disabled)
     body::after {
       content: '';
       position: fixed;
@@ -59,6 +60,7 @@
       0% { transform: translateY(-100%); }
       100% { transform: translateY(100vh); }
     }
+    */
     @keyframes glitch {
       0%, 100% { text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff; }
       25% { text-shadow: -2px 0 #ff00ff, 2px 0 #00ffff; }
