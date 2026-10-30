@@ -1,0 +1,16 @@
+[
+  {
+    "title": "Naming Convention em Cloud: O Equilíbrio entre Negócio, Governança e Limitações Técnicas",
+    "slug": "naming-convention-em-cloud",
+    "date": "2026-10-30",
+    "summary": "Uma boa naming convention vai além de nomear recursos: ela garante previsibilidade, facilita automação e reforça a governança em ambientes cloud — sempre equilibrando contexto de negócio e limitações técnicas dos provedores.",
+    "tags": [
+      "Cloud Computing",
+      "Naming Convention",
+      "Cloud Governance",
+      "Cloud Providers"
+    ],
+    "emoji": "🏷️",
+    "featured": true
+  }
+]
