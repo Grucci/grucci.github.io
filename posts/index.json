@@ -2,7 +2,7 @@
   {
     "title": "Naming Convention em Cloud: O Equilíbrio entre Negócio, Governança e Limitações Técnicas",
     "slug": "naming-convention-em-cloud",
-    "date": "2026-10-30",
+    "date": "2026-10-29",
     "summary": "Uma boa naming convention vai além de nomear recursos: ela garante previsibilidade, facilita automação e reforça a governança em ambientes cloud — sempre equilibrando contexto de negócio e limitações técnicas dos provedores.",
     "tags": [
       "Cloud Computing",
@@ -11,6 +11,21 @@
       "Cloud Providers"
     ],
     "emoji": "🏷️",
+    "featured": false
+  },
+
+  {
+    "title": "Fundamentos do Terraform (parte 1)",
+    "slug": "fundamentos-do-terraform-parte-1",
+    "date": "2026-10-31",
+    "summary": "Conheça os fundamentos do Terraform: sua arquitetura, o papel dos providers e as diferenças entre backends locais e remotos, além da importância do state file para acompanhar recursos, dependências e alterações na infraestrutura.",
+    "img_path": "/images/",
+    "tags": [
+      "iac",
+      "terraform",
+      "fundamentals"
+    ],
+    "emoji": "🏗️",
     "featured": true
   }
 ]

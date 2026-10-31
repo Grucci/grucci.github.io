@@ -1,14 +1,15 @@
 ---
 title: "Naming Convention em Cloud: O Equilíbrio entre Negócio, Governança e Limitações Técnicas"
 slug: naming-convention-em-cloud
-date: 2026-10-30
+date: 2026-10-29
 summary: "Uma boa naming convention vai além de nomear recursos: ela garante previsibilidade, facilita automação e reforça a governança em ambientes cloud — sempre equilibrando contexto de negócio e limitações técnicas dos provedores."
+img_path: images/
 tags: ["Cloud Computing", "Naming Convention", "Cloud Governance", "Cloud Providers"]
 emoji: "🏷️"
 featured: true
 ---
 
-![Infográfico sobre naming convention em cloud](images/Cloud%20Naming%20Convention%20Infographic.png)
+![Infográfico sobre naming convention em cloud](Cloud%20Naming%20Convention%20Infographic.png)
 
 Durante o processo de landing zone de uma cloud provider, diversas decisões estratégicas são estabelecidas, como estrutura de rede, modelo de gestão de identidade, monitoramento, governança e segurança. Entre esses pilares destaca-se também a necessidade de definir uma taxonomia clara e consistente para a organização dos recursos.
 

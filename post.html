@@ -735,6 +735,23 @@
         const contentEl = document.getElementById('post-content');
         contentEl.innerHTML = html;
 
+        if (typeof meta.img_path === 'string' && meta.img_path.trim()) {
+          const imageBasePath = meta.img_path.endsWith('/')
+            ? meta.img_path
+            : `${meta.img_path}/`;
+          const imageBase = new URL(imageBasePath, document.baseURI);
+
+          contentEl.querySelectorAll('img').forEach(image => {
+            const src = image.getAttribute('src');
+            if (!src || /^(?:[a-z][a-z\d+.-]*:|\/\/|\/|#)/i.test(src)) return;
+
+            const resolvedSrc = new URL(src, document.baseURI);
+            if (resolvedSrc.origin === imageBase.origin && resolvedSrc.pathname.startsWith(imageBase.pathname)) return;
+
+            image.src = new URL(src, imageBase).href;
+          });
+        }
+
         // Add IDs to headings for TOC + anchor linking
         contentEl.querySelectorAll('h2, h3').forEach(h => {
           if (!h.id) {
