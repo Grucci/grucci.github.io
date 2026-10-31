@@ -17,7 +17,7 @@
   {
     "title": "Fundamentos do Terraform (parte 1)",
     "slug": "fundamentos-do-terraform-parte-1",
-    "date": "2026-10-31",
+    "date": "2026-10-3",
     "summary": "Conheça os fundamentos do Terraform: sua arquitetura, o papel dos providers e as diferenças entre backends locais e remotos, além da importância do state file para acompanhar recursos, dependências e alterações na infraestrutura.",
     "img_path": "/images/",
     "tags": [
