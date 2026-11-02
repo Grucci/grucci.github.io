@@ -34,6 +34,84 @@
       background-color: #0a0a0f;
       font-family: 'Rajdhani', sans-serif;
       overflow-x: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    body.theme-light {
+      background-color: #edf6ff;
+      color: #0f172a;
+    }
+    body.theme-light .navbar-blur {
+      background: rgba(255, 255, 255, 0.82);
+      border-bottom-color: rgba(14, 165, 233, 0.15);
+    }
+    body.theme-light #post-hero {
+      background: radial-gradient(ellipse at 30% 40%, rgba(123,47,255,0.12) 0%, transparent 50%), radial-gradient(ellipse at 70% 20%, rgba(14,165,233,0.10) 0%, transparent 40%), linear-gradient(135deg, #edf6ff 0%, #f2f7ff 50%, #eef2ff 100%) !important;
+    }
+    body.theme-light .text-gray-400,
+    body.theme-light .text-gray-500,
+    body.theme-light .text-gray-600,
+    body.theme-light .text-gray-700,
+    body.theme-light .text-gray-800 {
+      color: #475569 !important;
+    }
+    body.theme-light .text-white,
+    body.theme-light .text-gray-300 {
+      color: #0f172a !important;
+    }
+    body.theme-light .prose-cyber,
+    body.theme-light .prose-cyber p,
+    body.theme-light .prose-cyber li,
+    body.theme-light .prose-cyber td,
+    body.theme-light .prose-cyber blockquote {
+      color: #334155 !important;
+    }
+    body.theme-light .prose-cyber h2,
+    body.theme-light .prose-cyber h3,
+    body.theme-light .prose-cyber h4,
+    body.theme-light .prose-cyber strong,
+    body.theme-light .prose-cyber h1 {
+      color: #0f172a !important;
+    }
+    body.theme-light .prose-cyber pre {
+      background: rgba(255, 255, 255, 0.75);
+      border-color: rgba(14, 165, 233, 0.2);
+      color: #0f172a;
+      box-shadow: 0 0 18px rgba(14, 165, 233, 0.08), inset 0 0 24px rgba(148,163,184,0.08);
+    }
+    body.theme-light .cyber-tag {
+      background: rgba(14, 165, 233, 0.08);
+      border-color: rgba(14, 165, 233, 0.25);
+      color: #0369a1;
+    }
+    body.theme-light .cyber-tag-pink {
+      background: rgba(236, 72, 153, 0.08);
+      border-color: rgba(236, 72, 153, 0.25);
+      color: #be185d;
+    }
+    body.theme-light .cyber-tag-violet {
+      background: rgba(124, 58, 237, 0.08);
+      border-color: rgba(124, 58, 237, 0.25);
+      color: #6d28d9;
+    }
+    body.theme-light .cyber-tag-green {
+      background: rgba(16, 185, 129, 0.08);
+      border-color: rgba(16, 185, 129, 0.25);
+      color: #047857;
+    }
+    body.theme-light .share-btn,
+    body.theme-light .clip-corner-sm,
+    body.theme-light [style*="background: rgba(13,13,26,0.8)"] {
+      background: rgba(255, 255, 255, 0.8) !important;
+      border-color: rgba(14, 165, 233, 0.2) !important;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+    }
+    body.theme-light .section-divider {
+      background: linear-gradient(90deg, transparent, rgba(14, 165, 233, 0.4), rgba(168, 85, 247, 0.4), transparent);
+    }
+    body.theme-light .border-gray-800,
+    body.theme-light .border-gray-700,
+    body.theme-light .border-gray-900 {
+      border-color: rgba(148, 163, 184, 0.4) !important;
     }
     body::before {
       content: '';
@@ -112,6 +190,31 @@
       background: rgba(0, 255, 136, 0.08);
       border: 1px solid rgba(0, 255, 136, 0.25);
       color: #00ff88;
+    }
+    .theme-toggle {
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0;
+      font-size: 1.1rem;
+      line-height: 1;
+      background: rgba(9, 18, 33, 0.25);
+      border: 1px solid rgba(0, 255, 255, 0.25);
+      color: #00ffff;
+      box-shadow: 0 0 8px rgba(0, 255, 255, 0.08);
+      transition: all 0.25s ease;
+    }
+    .theme-toggle:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 12px rgba(0, 255, 255, 0.18);
+    }
+    body.theme-light .theme-toggle {
+      background: rgba(255, 255, 255, 0.8);
+      border-color: rgba(14, 165, 233, 0.25);
+      color: #0f172a;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
     }
     a.hover-neon { transition: color 0.3s ease, text-shadow 0.3s ease; }
     a.hover-neon:hover { color: #00ffff; text-shadow: 0 0 8px rgba(0, 255, 255, 0.7); }
@@ -367,9 +470,7 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
       <div class="flex items-center justify-between h-16">
         <a href="index.html" class="flex items-center gap-3 group">
-          <div class="w-8 h-8 flex items-center justify-center bg-cyan-500/10 border border-cyan-500/40 clip-corner-sm group-hover:bg-cyan-500/20 transition-all duration-300">
-            <span class="text-cyan-400 font-display font-bold text-sm">FG</span>
-          </div>
+          <img src="https://avatars.githubusercontent.com/u/29503652?v=4" alt="Felipe Grucci" class="w-8 h-8 rounded-full object-cover border border-cyan-500/40" />
           <span class="font-display text-sm font-bold text-cyan-400 tracking-widest uppercase">
             GRUCCI<span class="text-fuchsia-400">.</span>DEV
           </span>
@@ -387,14 +488,14 @@
             <span class="text-violet-500 mr-1">./</span>Posts
           </a>
           <a href="https://github.com/Grucci" target="_blank" class="hover-neon text-gray-400 font-mono text-sm tracking-wide uppercase transition-all duration-300">
-            <span class="text-cyan-500 mr-1">~/</span>GitHub
+            <span class="text-cyan-500 mr-1">./</span>GitHub <span aria-hidden="true">↗</span>
           </a>
-          <a href="https://www.linkedin.com/in/felipe-grucci-libona/" target="_blank"
-             class="font-mono text-xs uppercase tracking-widest px-4 py-2 clip-corner-sm transition-all duration-300
-                    bg-fuchsia-500/10 border border-fuchsia-500/40 text-fuchsia-400
-                    hover:bg-fuchsia-500/25 hover:border-fuchsia-400">
-            LinkedIn ↗
+          <a href="https://www.linkedin.com/in/felipe-grucci-libona/" target="_blank" class="hover-neon text-gray-400 font-mono text-sm tracking-wide uppercase transition-all duration-300">
+            <span class="text-fuchsia-500 mr-1">./</span>LinkedIn <span aria-hidden="true">↗</span>
           </a>
+          <button id="theme-toggle" type="button" class="theme-toggle clip-corner-sm" aria-label="Alternar tema">
+            <span id="theme-icon" aria-hidden="true">☀</span>
+          </button>
         </div>
 
         <!-- Mobile hamburger -->
@@ -419,11 +520,14 @@
           <span class="text-violet-500">./</span> Posts
         </a>
         <a href="https://github.com/Grucci" target="_blank" class="block font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors py-2 border-b border-gray-800">
-          <span class="text-cyan-500">~/</span> GitHub
+          <span class="text-cyan-500">./</span> GitHub <span aria-hidden="true">↗</span>
         </a>
-        <a href="https://www.linkedin.com/in/felipe-grucci-libona/" target="_blank" class="block font-mono text-sm text-fuchsia-400 hover:text-fuchsia-300 transition-colors py-2">
-          LinkedIn ↗
+        <a href="https://www.linkedin.com/in/felipe-grucci-libona/" target="_blank" class="block font-mono text-sm text-gray-400 hover:text-fuchsia-400 transition-colors py-2">
+          <span class="text-fuchsia-500">./</span> LinkedIn <span aria-hidden="true">↗</span>
         </a>
+        <button id="mobile-theme-toggle" type="button" class="theme-toggle clip-corner-sm" aria-label="Alternar tema">
+          <span id="mobile-theme-icon" aria-hidden="true">☀</span>
+        </button>
       </div>
     </div>
   </nav>
@@ -618,6 +722,35 @@
   </footer>
 
   <script>
+    // ── Theme toggle ────────────────────────────────────────────────────────
+    const THEME_KEY = 'grucci-theme';
+    const themeToggle = document.getElementById('theme-toggle');
+    const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const mobileThemeIcon = document.getElementById('mobile-theme-icon');
+
+    function applyTheme(theme) {
+      const isLight = theme === 'light';
+      document.body.classList.toggle('theme-light', isLight);
+      const icon = isLight ? '☾' : '☀';
+
+      if (themeIcon) themeIcon.textContent = icon;
+      if (mobileThemeIcon) mobileThemeIcon.textContent = icon;
+      localStorage.setItem(THEME_KEY, theme);
+    }
+
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(savedTheme || (prefersDark ? 'dark' : 'light'));
+
+    function toggleTheme() {
+      const nextTheme = document.body.classList.contains('theme-light') ? 'dark' : 'light';
+      applyTheme(nextTheme);
+    }
+
+    if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+    if (mobileThemeToggle) mobileThemeToggle.addEventListener('click', toggleTheme);
+
     // ── Helpers ──────────────────────────────────────────────────────────────
 
     /** Parse YAML-like front-matter block from Markdown string */
