@@ -806,6 +806,9 @@
               <button id="share-linkedin" class="share-btn w-full text-left px-3 py-2 clip-corner-sm font-mono text-xs text-gray-400 flex items-center gap-2">
                 <span class="text-blue-400">in</span> LinkedIn
               </button>
+              <button id="share-whatsapp" class="share-btn w-full text-left px-3 py-2 clip-corner-sm font-mono text-xs text-gray-400 flex items-center gap-2">
+                <span class="text-green-400">WA</span> WhatsApp
+              </button>
               <button id="copy-btn" class="share-btn w-full text-left px-3 py-2 clip-corner-sm font-mono text-xs text-gray-400 flex items-center gap-2">
                 <span class="text-cyan-400">#</span> Copiar link
               </button>
@@ -1137,6 +1140,11 @@
     document.getElementById('share-linkedin').addEventListener('click', () => {
       const url = encodeURIComponent(window.location.href);
       window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
+    });
+
+    document.getElementById('share-whatsapp').addEventListener('click', () => {
+      const text = encodeURIComponent(`${document.getElementById('page-title').textContent} ${window.location.href}`);
+      window.open(`https://wa.me/?text=${text}`, '_blank', 'noopener,noreferrer');
     });
 
     document.getElementById('copy-btn').addEventListener('click', () => {
