@@ -6,7 +6,7 @@ summary: "Uma boa naming convention vai além de nomear recursos: ela garante pr
 img_path: images/
 tags: ["Cloud Computing", "Naming Convention", "Cloud Governance", "Cloud Providers"]
 emoji: "🏷️"
-featured: true
+featured: false
 ---
 
 ![Infográfico sobre naming convention em cloud](Cloud%20Naming%20Convention%20Infographic.png)
