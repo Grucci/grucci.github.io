@@ -1,10 +1,10 @@
 [
   {
-    "title": "Azure Storage Account: fundamentos, arquitetura e boas práticas (parte 1)",
-    "slug": "azure-storage-account-parte-1",
-    "date": "2026-11-06",
-    "summary": "Conheça os fundamentos do Azure Storage Account: sua arquitetura, os diferentes tipos de contas e as melhores práticas para o uso eficiente e seguro dos recursos.",
-    "img_path": "/images/",
+    "title": "Naming Convention em Cloud: O Equilíbrio entre Negócio, Governança e Limitações Técnicas",
+    "slug": "naming-convention-em-cloud",
+    "date": "2026-10-29",
+    "category": "Cloud Governance",
+    "summary": "Uma boa naming convention vai além de nomear recursos: ela garante previsibilidade, facilita automação e reforça a governança em ambientes cloud — sempre equilibrando contexto de negócio e limitações técnicas dos provedores.",
     "tags": [
       "#storage",
       "#account",
@@ -15,11 +15,11 @@
     "emoji": "💾",
     "featured": true
   },
-  
   {
     "title": "Fundamentos do Terraform (parte 1)",
     "slug": "fundamentos-do-terraform-parte-1",
     "date": "2026-10-31",
+    "category": "Infrastructure as Code",
     "summary": "Conheça os fundamentos do Terraform: sua arquitetura, o papel dos providers e as diferenças entre backends locais e remotos, além da importância do state file para acompanhar recursos, dependências e alterações na infraestrutura.",
     "img_path": "/images/",
     "tags": [
@@ -30,19 +30,21 @@
     "emoji": "🏗️",
     "featured": false
   },
-  
   {
-    "title": "Naming Convention em Cloud: O Equilíbrio entre Negócio, Governança e Limitações Técnicas",
-    "slug": "naming-convention-em-cloud",
-    "date": "2026-10-29",
-    "summary": "Uma boa naming convention vai além de nomear recursos: ela garante previsibilidade, facilita automação e reforça a governança em ambientes cloud — sempre equilibrando contexto de negócio e limitações técnicas dos provedores.",
+    "title": "Azure Storage Account: fundamentos, arquitetura e boas práticas (parte 1)",
+    "slug": "azure-storage-account-parte-1",
+    "date": "2026-11-01",
+    "category": "Azure Storage",
+    "summary": "Um guia para entender os serviços de armazenamento da Azure e suas aplicações em ambientes corporativos.",
+    "img_path": "images/",
     "tags": [
-      "#cloud computing",
-      "#naming convention",
-      "#cloud governance",
-      "#cloud providers"
+      "storage",
+      "account",
+      "armazenamento",
+      "azure",
+      "fundamentals"
     ],
-    "emoji": "🏷️",
-    "featured": false
+    "emoji": "💾",
+    "featured": true
   }
 ]
