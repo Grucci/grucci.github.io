@@ -603,7 +603,7 @@
           <a href="index.html#bio" class="hover-neon text-gray-400 font-mono text-sm tracking-wide uppercase transition-all duration-300">
             <span class="text-fuchsia-500 mr-1">./</span>Bio
           </a>
-          <a href="index.html#posts" class="hover-neon text-gray-400 font-mono text-sm tracking-wide uppercase transition-all duration-300">
+          <a href="posts.html" class="hover-neon text-gray-400 font-mono text-sm tracking-wide uppercase transition-all duration-300">
             <span class="text-violet-500 mr-1">./</span>Posts
           </a>
           <a href="https://github.com/Grucci" target="_blank" class="hover-neon text-gray-400 font-mono text-sm tracking-wide uppercase transition-all duration-300">
@@ -635,7 +635,7 @@
         <a href="index.html#bio" class="block font-mono text-sm text-gray-400 hover:text-fuchsia-400 transition-colors py-2 border-b border-gray-800">
           <span class="text-fuchsia-500">./</span> Bio
         </a>
-        <a href="index.html#posts" class="block font-mono text-sm text-gray-400 hover:text-violet-400 transition-colors py-2 border-b border-gray-800">
+        <a href="posts.html" class="block font-mono text-sm text-gray-400 hover:text-violet-400 transition-colors py-2 border-b border-gray-800">
           <span class="text-violet-500">./</span> Posts
         </a>
         <a href="https://github.com/Grucci" target="_blank" class="block font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors py-2 border-b border-gray-800">
@@ -663,7 +663,7 @@
       <div class="font-mono text-xs text-gray-600 mb-6 flex items-center gap-2 flex-wrap">
         <a href="index.html" class="hover:text-cyan-400 transition-colors">~/home</a>
         <span class="text-gray-700">/</span>
-        <a href="index.html#posts" class="hover:text-cyan-400 transition-colors">posts</a>
+        <a href="posts.html" class="hover:text-cyan-400 transition-colors">posts</a>
         <span class="text-gray-700">/</span>
         <span id="breadcrumb-slug" class="text-gray-500">...</span>
       </div>
@@ -813,7 +813,7 @@
           </div>
 
           <!-- Back to posts -->
-          <a href="index.html#posts" class="mt-4 block text-center font-mono text-xs text-gray-600 hover:text-cyan-400 transition-colors duration-300 py-3">
+          <a href="posts.html" class="mt-4 block text-center font-mono text-xs text-gray-600 hover:text-cyan-400 transition-colors duration-300 py-3">
             ← Voltar aos posts
           </a>
         </div>
@@ -931,7 +931,7 @@
 
     if (!slug) {
       // No slug — redirect to index
-      window.location.href = 'index.html#posts';
+      window.location.href = 'posts.html';
     }
 
     // ── Load post ────────────────────────────────────────────────────────────
@@ -1032,7 +1032,7 @@
             <div class="font-mono text-xs text-red-400 mb-2">// erro 404</div>
             <h2 class="font-display text-xl text-white mb-3">Post não encontrado</h2>
             <p class="text-gray-500 mb-6">O post <code class="text-red-400">${slug}</code> não existe ou foi movido.</p>
-            <a href="index.html#posts" class="font-mono text-sm text-cyan-400 hover:text-cyan-300 transition-colors">
+            <a href="posts.html" class="font-mono text-sm text-cyan-400 hover:text-cyan-300 transition-colors">
               ← Voltar aos posts
             </a>
           </div>
