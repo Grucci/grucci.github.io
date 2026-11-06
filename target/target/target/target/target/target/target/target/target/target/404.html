@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 · Felipe Grucci</title>
+  <meta name="description" content="Página não encontrada no blog de Felipe Grucci." />
+  <link rel="icon" type="image/png" href="https://avatars.githubusercontent.com/u/29503652?v=4" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            mono: ['"Share Tech Mono"', 'monospace'],
+            body: ['Rajdhani', 'sans-serif'],
+            display: ['Orbitron', 'sans-serif'],
+          },
+          colors: {
+            cyber: {
+              black: '#0a0a0f',
+              dark: '#0d0d1a',
+              navy: '#0f0f2e',
+              neon: '#00ffff',
+              pink: '#ff00ff',
+              violet: '#7b2fff',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      background-color: #0a0a0f;
+      font-family: 'Rajdhani', sans-serif;
+      overflow-x: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .navbar-blur {
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 255, 255, 0.12);
+    }
+
+    .hero-bg {
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(123, 47, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 40%),
+        radial-gradient(ellipse at 60% 80%, rgba(255, 0, 255, 0.08) 0%, transparent 40%),
+        linear-gradient(135deg, #0a0a0f 0%, #0d0d1a 50%, #0f0f2e 100%);
+    }
+
+    .clip-corner {
+      clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+    }
+
+    .clip-corner-sm {
+      clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+    }
+
+    .theme-toggle {
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      line-height: 1;
+      background: rgba(9, 18, 33, 0.25);
+      border: 1px solid rgba(0, 255, 255, 0.25);
+      color: #00ffff;
+      box-shadow: 0 0 8px rgba(0, 255, 255, 0.08);
+      transition: all 0.25s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 12px rgba(0, 255, 255, 0.18);
+    }
+
+    .error-panel {
+      background: rgba(13, 13, 26, 0.82);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 255, 255, 0.28);
+      box-shadow: 0 0 5px rgba(0, 255, 255, 0.16), inset 0 0 18px rgba(0, 255, 255, 0.025);
+    }
+
+    .error-heading {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .error-eyebrow {
+      margin-bottom: 0.75rem;
+      color: #00ffff;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: clamp(0.75rem, 2vw, 1rem);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .error-number {
+      margin: 0 auto 0.75rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(7rem, 22vw, 14rem);
+      font-weight: 900;
+      line-height: 0.86;
+      letter-spacing: -0.08em;
+      text-align: center;
+      background: linear-gradient(90deg, #00ff88 0%, #00ffff 35%, #7b2fff 70%, #ff00ff 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      filter: drop-shadow(3px 0 0 rgba(0, 255, 255, 0.35)) drop-shadow(-3px 0 0 rgba(255, 0, 110, 0.3));
+    }
+
+    .error-title {
+      margin: 0;
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .home-button {
+      background: rgba(0, 255, 255, 0.08);
+      border: 1px solid rgba(0, 255, 255, 0.45);
+      color: #00ffff;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.08);
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    }
+
+    .home-button:hover {
+      background: rgba(0, 255, 255, 0.14);
+      border-color: rgba(0, 255, 255, 0.8);
+      box-shadow: 0 0 16px rgba(0, 255, 255, 0.18);
+    }
+
+    .blink { animation: blink 1s step-end infinite; }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    #mobile-menu {
+      transition: max-height 0.4s ease, opacity 0.4s ease;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+    }
+
+    #mobile-menu.open {
+      max-height: 440px;
+      opacity: 1;
+    }
+
+    body.theme-light {
+      background-color: #edf6ff;
+      color: #0f172a;
+    }
+
+    body.theme-light::before {
+      background-image:
+        linear-gradient(rgba(14, 165, 233, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(14, 165, 233, 0.12) 1px, transparent 1px);
+    }
+
+    body.theme-light .navbar-blur {
+      background: rgba(255, 255, 255, 0.8);
+      border-bottom-color: rgba(14, 165, 233, 0.15);
+    }
+
+    body.theme-light .hero-bg {
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(123, 47, 255, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(14, 165, 233, 0.1) 0%, transparent 40%),
+        radial-gradient(ellipse at 60% 80%, rgba(236, 72, 153, 0.08) 0%, transparent 40%),
+        linear-gradient(135deg, #edf6ff 0%, #f5f9ff 50%, #eef2ff 100%);
+    }
+
+    body.theme-light .error-panel {
+      background: rgba(255, 255, 255, 0.84);
+      border-color: rgba(14, 165, 233, 0.28);
+      box-shadow: 0 10px 24px rgba(148, 163, 184, 0.12), inset 0 0 18px rgba(14, 165, 233, 0.025);
+    }
+
+    body.theme-light .text-white { color: #0f172a !important; }
+    body.theme-light .text-gray-300,
+    body.theme-light .text-gray-400 { color: #475569 !important; }
+    body.theme-light .text-gray-500,
+    body.theme-light .text-gray-600 { color: #64748b !important; }
+
+    body.theme-light .theme-toggle {
+      background: rgba(255, 255, 255, 0.8);
+      border-color: rgba(14, 165, 233, 0.25);
+      color: #0f172a;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+    }
+
+    body.theme-light .home-button {
+      background: rgba(14, 165, 233, 0.08);
+      border-color: rgba(14, 165, 233, 0.42);
+      color: #0369a1;
+    }
+
+    @media (max-width: 640px) {
+      .error-heading { margin-bottom: 1.5rem; }
+      .error-number { font-size: clamp(7rem, 34vw, 10rem); }
+      .error-title { letter-spacing: 0.06em; }
+    }
+  </style>
+</head>
+<body class="text-gray-300 min-h-screen relative">
+  <nav class="navbar-blur fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="flex items-center justify-between h-16">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <img src="https://avatars.githubusercontent.com/u/29503652?v=4" alt="Felipe Grucci" class="w-8 h-8 rounded-full object-cover border border-cyan-500/40" />
+          <span class="font-display text-sm font-bold text-cyan-400 tracking-widest uppercase">
+            GRUCCI<span class="text-fuchsia-400">.</span>CLOUD
+          </span>
+        </a>
+
+        <div class="hidden md:flex items-center gap-8">
+          <a href="index.html" class="text-gray-400 font-mono text-sm tracking-wide uppercase hover:text-cyan-400 transition-colors"><span class="text-cyan-500 mr-1">./</span>Home</a>
+          <a href="index.html#bio" class="text-gray-400 font-mono text-sm tracking-wide uppercase hover:text-fuchsia-400 transition-colors"><span class="text-fuchsia-500 mr-1">./</span>Bio</a>
+          <a href="index.html#posts" class="text-gray-400 font-mono text-sm tracking-wide uppercase hover:text-violet-400 transition-colors"><span class="text-violet-500 mr-1">./</span>Posts</a>
+          <a href="https://github.com/Grucci" target="_blank" rel="noopener noreferrer" class="text-gray-400 font-mono text-sm tracking-wide uppercase hover:text-cyan-400 transition-colors"><span class="text-cyan-500 mr-1">./</span>GitHub <span aria-hidden="true">↗</span></a>
+          <a href="https://www.linkedin.com/in/felipe-grucci-libona/" target="_blank" rel="noopener noreferrer" class="text-gray-400 font-mono text-sm tracking-wide uppercase hover:text-fuchsia-400 transition-colors"><span class="text-fuchsia-500 mr-1">./</span>LinkedIn <span aria-hidden="true">↗</span></a>
+          <button id="theme-toggle" type="button" class="theme-toggle clip-corner-sm" aria-label="Alternar tema" title="Alternar tema"><span id="theme-icon" aria-hidden="true">☀</span></button>
+        </div>
+
+        <div class="md:hidden flex items-center gap-3">
+          <button id="hamburger" class="text-cyan-400 focus:outline-none" type="button" aria-label="Abrir menu" aria-expanded="false">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path id="ham-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="mobile-menu" class="md:hidden border-t border-cyan-500/10">
+      <div class="px-4 py-4 space-y-3 bg-cyber-black/95">
+        <a href="index.html" class="block font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors py-2 border-b border-gray-800"><span class="text-cyan-500">./</span> Home</a>
+        <a href="index.html#bio" class="block font-mono text-sm text-gray-400 hover:text-fuchsia-400 transition-colors py-2 border-b border-gray-800"><span class="text-fuchsia-500">./</span> Bio</a>
+        <a href="index.html#posts" class="block font-mono text-sm text-gray-400 hover:text-violet-400 transition-colors py-2 border-b border-gray-800"><span class="text-violet-500">./</span> Posts</a>
+        <a href="https://github.com/Grucci" target="_blank" rel="noopener noreferrer" class="block font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors py-2"><span class="text-cyan-500">./</span> GitHub <span aria-hidden="true">↗</span></a>
+        <a href="https://www.linkedin.com/in/felipe-grucci-libona/" target="_blank" rel="noopener noreferrer" class="block font-mono text-sm text-gray-400 hover:text-fuchsia-400 transition-colors py-2"><span class="text-fuchsia-500">./</span> LinkedIn <span aria-hidden="true">↗</span></a>
+        <button id="mobile-theme-toggle" type="button" class="theme-toggle clip-corner-sm" aria-label="Alternar tema" title="Alternar tema"><span id="mobile-theme-icon" aria-hidden="true">☀</span></button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="hero-bg min-h-screen flex items-center justify-center pt-20 pb-12 relative overflow-hidden">
+    <div class="absolute top-1/4 left-1/4 w-72 h-72 bg-violet-600/5 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-4xl w-full mx-auto px-4 sm:px-6 py-12 relative z-10">
+      <header class="error-heading">
+        <h1 class="error-number">404</h1>
+        <p class="error-title text-white">Oops! Rota não encontrada</p>
+      </header>
+
+      <section class="error-panel clip-corner relative overflow-hidden" aria-label="Mensagem de erro">
+        <div class="flex items-center justify-between gap-4 px-5 py-4 border-b border-cyan-500/10">
+          <div class="flex items-center gap-2" aria-hidden="true">
+            <span class="w-3 h-3 rounded-full bg-red-500"></span>
+            <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+            <span class="w-3 h-3 rounded-full bg-green-500"></span>
+          </div>
+          <span class="font-mono text-xs text-gray-500">bash · exit code 1</span>
+        </div>
+        <div class="p-5 sm:p-8 font-mono text-sm sm:text-base leading-8">
+          <p><span class="text-cyan-400">root@grucci:~#</span> <span class="text-violet-400">cd</span> <span class="text-gray-300">/caminho-solicitado</span></p>
+          <p class="text-red-400">bash: cd: /caminho-solicitado: No such file or directory</p>
+          <p class="mt-4"><span class="text-cyan-400">root@grucci:~#</span> <span class="text-violet-400">echo</span> <span class="text-gray-300">$?</span></p>
+          <p class="text-fuchsia-400">1</p>
+          <p class="mt-4 text-gray-500"><span class="text-cyan-400">root@grucci:~#</span> # Esse caminho não existe. Vamos voltar para o início?</p>
+          <p class="mt-2"><span class="text-cyan-400">root@grucci:~#</span> <span class="inline-block w-2 h-4 bg-cyan-400 align-middle blink" aria-hidden="true"></span></p>
+        </div>
+      </section>
+
+      <div class="flex justify-center mt-8">
+        <a href="index.html" class="home-button clip-corner-sm inline-flex items-center justify-center gap-2 px-7 py-4 font-mono text-sm uppercase tracking-widest transition-all duration-300">
+          <span aria-hidden="true">←</span> Voltar à página inicial
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const THEME_KEY = 'grucci-theme';
+    const themeToggle = document.getElementById('theme-toggle');
+    const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const mobileThemeIcon = document.getElementById('mobile-theme-icon');
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const hamIcon = document.getElementById('ham-icon');
+
+    function applyTheme(theme) {
+      const isLight = theme === 'light';
+      document.body.classList.toggle('theme-light', isLight);
+      const icon = isLight ? '☾' : '☀';
+      if (themeIcon) themeIcon.textContent = icon;
+      if (mobileThemeIcon) mobileThemeIcon.textContent = icon;
+      localStorage.setItem(THEME_KEY, theme);
+    }
+
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(savedTheme || (prefersDark ? 'dark' : 'light'));
+
+    function toggleTheme() {
+      applyTheme(document.body.classList.contains('theme-light') ? 'dark' : 'light');
+    }
+
+    themeToggle.addEventListener('click', toggleTheme);
+    mobileThemeToggle.addEventListener('click', toggleTheme);
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', String(isOpen));
+      hamburger.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+      hamIcon.setAttribute('d', isOpen
+        ? 'M6 18L18 6M6 6l12 12'
+        : 'M4 6h16M4 12h16M4 18h16'
+      );
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        hamburger.setAttribute('aria-label', 'Abrir menu');
+        hamIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+      });
+    });
+  </script>
+</body>
+</html>
