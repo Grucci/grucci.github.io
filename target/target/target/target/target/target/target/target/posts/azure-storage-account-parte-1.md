@@ -2,13 +2,15 @@
 title: Azure Storage Account: fundamentos, arquitetura e boas práticas (parte 1)
 slug: azure-storage-account-parte-1
 author: grucci
-date: 2023-11-01
+date: 2026-11-06
 summary: "Um guia para entender os serviços de armazenamento da Azure e suas aplicações em ambientes corporativos."
 img_path: images/
 tags: [storage, account, armazenamento, azure, fundamentals]
 emoji: "💾"
-featured: false
+featured: true
 ---
+
+![Microsoft Azure Storage Account](Azure-storage-account-part-1.png)
 
 Depois de algumas mudanças no trabalho, comecei a fazer parte do time responsável pelos produtos relacionados a Storage, o que me levou a novos desafios e oportunidadesde aprofundar meus conhecimentos sobre os serviçoes de armazenamento disponíveis nos diversos Cloud Providers.
 
@@ -45,19 +47,66 @@ Cada serviço possui características específicas de desempenho, acesso, escala
 
 ## Qual problema a Storage Account resolve?
 
-## Como funciona o armazenamento em nuvem?
+Azure Storage Account é uma alternativa para armazenar e disponibilizar dados na nuvem.
 
-## Quais são as principais características?
+Ele permite que aplicações e outros serviços Azure utilizem recursos de armazenamento sem que seja necessário adminitrsar toda a infraestrutura física envolvida nesse processo.
 
-## Diferença entre armazenamento tradicional (on-premises) e armazenamento em nuvem
+Além disso, oferece diferentes possibilidades de configuração para atender necessidades relacionadas à disponibilidade, segurança, desempenho e custo.
 
-## Quais cenários justificam sua utilização?
+Um ponto importante é entender que não se trata apenas de criar uma conta e comçar a armazenas arquivos. Existem configurações e decisões que podem impactar diretamente a forma como os dados serão acessados, protegidos e cobrados.
+
+## Qual o papel do Storage Account e como é organizado?
+
+A Storage Account funciona como um recurso que disponibiliza  os serviços de armazenamento para aplicações, máquinas virtuais e outros recursos. Faz parte da organização dos recursos dentro de uma Subscription e Resource Group.
+
+```text
+Subscription
+    |
+    └── Resource Group
+            |
+            └── Storage Account
+                    |
+                    ├── Blob Storage
+                    ├── Azure Files
+                    ├── Queue Storage
+                    └── Table Storage
+```
+
+Essa estrutura ajuda a entender onde o Storage Account se encaixa dentro do Azure e como os serviços são organizados.
+
+Ele é criado como um recurso dentro do Resource Group e possui configurações próprias, que influenciam o funcionamento dos serviços de armazenamento que ele possui.
+
+Entre essas configurações, encontramos:
+
+* Região: define onde os dados serão armazenados
+* Performance: determina características relacionadas ao desempenho da conta
+* Redundância: define como os dados serão replicados para ajudar a garantir sua disponibilidade e durabilidade
+* Segurança: reúne configurações relacionadas ao acesso e à proteção dos dados
+* Rede: permite controlar como os serviços de armazenamento podem ser acessados
+
+## Quando utilizar uma Storage Account?
+
+Dependendo da necessidade da solução o Storage Account pode ser utilizado em diferentes cenários.
+
+Alguns exemplos que ajudam a entender suas possibilidades:
+
+* Armazenamento de arquivos utilizados por aplicações
+* Guarda de documentos, imagens e outros conteúdos
+* Armazenamento de backups
+* Compartilhamento de arquivos entre servidores e aplicações
+* Comunicação entre componentes de uma aplicação por meio de filas
+* Armazenamento de dados estruturados
+
+Como o Storage Account possui diferentes serviços dentro do seu ecossistema, nem toda necessidade de armazenamento precisa ser resolvida da mesma maneira e por isso é importante conhecer as características de cada serviço antes de decidir qual utilizar.
 
 ---
+
 ## Referências
 
-- [Visão geral das contas de armazenamento](https://learn.microsoft.com/pt-br/azure/storage/common/storage-account-overview)
-- [O que é uma storage account?](https://www.linkedin.com/pulse/o-que-%C3%A9-uma-storage-account-leandro-chiesa/)
-- [Azure Storage - Explorando os Diferentes Tipos de Armazenamento](https://medium.com/@habbema/azure-storage-0226b2db1daf)
-- [Diferenças entre Blob Storage e Azure Files](https://unicast.com.br/posts/diferencas-entre-blob-storage-e-azure-files/)
-- [Azure Storage Accounts](https://www.nathanpinotti.com.br/azure-storage-account/)
+* [Documentação do Armazenamento do Azure](https://learn.microsoft.com/pt-br/azure/storage/?utm_source=chatgpt.com)
+  * [Visão geral das contas de armazenamento](https://learn.microsoft.com/pt-br/azure/storage/common/storage-account-overview)
+  * [Introdução ao Armazenamento do Azure](https://learn.microsoft.com/pt-br/azure/storage/common/storage-introduction?utm_source=chatgpt.com)
+* [O que é uma storage account?](https://www.linkedin.com/pulse/o-que-%C3%A9-uma-storage-account-leandro-chiesa/)
+* [Azure Storage - Explorando os Diferentes Tipos de Armazenamento](https://medium.com/@habbema/azure-storage-0226b2db1daf)
+* [Diferenças entre Blob Storage e Azure Files](https://unicast.com.br/posts/diferencas-entre-blob-storage-e-azure-files/)
+* [Azure Storage Accounts](https://www.nathanpinotti.com.br/azure-storage-account/)

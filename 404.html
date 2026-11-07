@@ -305,6 +305,7 @@
     body.theme-light ::-webkit-scrollbar-track { background: #eef3ff; }
     body.theme-light ::-webkit-scrollbar-thumb { background: #1558C9; }
   </style>
+  <link rel="stylesheet" href="light-theme.css" />
 </head>
 <body class="text-gray-300 min-h-screen relative">
   <nav class="navbar-blur fixed top-0 left-0 right-0 z-50">
@@ -398,11 +399,6 @@
       if (mobileThemeIcon) mobileThemeIcon.textContent = icon;
       localStorage.setItem(THEME_KEY, theme);
     }
-    body.theme-light .text-fuchsia-500,
-    body.theme-light .text-pink-500,
-    body.theme-light .text-green-500,
-    body.theme-light .text-lime-500,
-    body.theme-light .text-yellow-500 { color: #526a06 !important; }
 
     const savedTheme = localStorage.getItem(THEME_KEY);
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
