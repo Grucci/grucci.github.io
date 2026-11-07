@@ -20,7 +20,7 @@ Um dos primeiros assuntos que estou me dedicando a estudar é o *Azure Storage A
 
 ## O que é um Storage Account?
 
-Uma Azure Storage Account é um recurso de infraestrutura responsável por disponibilizar e gerenciar serviços de armazenamento de dados dentro do Microsoft Azure.
+Um Azure Storage Account é um recurso de infraestrutura responsável por disponibilizar e gerenciar serviços de armazenamento de dados dentro do Microsoft Azure.
 
 Ele funciona como uma estrutura lógica que reúne diferentes serviços de armazenamento, permitindo que aplicações, usuários e outros recursos de nuvem armazenem e acessem informações de maneira escalável e segura.
 
@@ -34,7 +34,7 @@ Ele funciona como uma estrutura lógica que reúne diferentes serviços de armaz
 * Dados estruturados e não estruturados
 * Compartilhamentos de arquivos utilizados por aplicações e servidores
 
-Uma característica importante é que a Storage Account não representa simplesmente um disco virtual ou um espaço de armazenamento. Ele disponibiliza diferentes serviços, cada um desenvolvido para atender padrões de utilização e necessidades de arquitetura diferentes.
+Uma característica importante é que o Storage Account não representa simplesmente um disco virtual ou um espaço de armazenamento. Ele disponibiliza diferentes serviços, cada um desenvolvido para atender padrões de utilização e necessidades de arquitetura diferentes.
 
 Principais serviços:
 
@@ -57,7 +57,7 @@ Um ponto importante é entender que não se trata apenas de criar uma conta e co
 
 ## Qual o papel do Storage Account e como é organizado?
 
-A Storage Account funciona como um recurso que disponibiliza  os serviços de armazenamento para aplicações, máquinas virtuais e outros recursos. Faz parte da organização dos recursos dentro de uma Subscription e Resource Group.
+O Storage Account funciona como um recurso que disponibiliza  os serviços de armazenamento para aplicações, máquinas virtuais e outros recursos. Faz parte da organização dos recursos dentro de uma Subscription e Resource Group.
 
 ```text
 Subscription

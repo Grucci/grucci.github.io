@@ -554,6 +554,7 @@
     body.theme-light ::-webkit-scrollbar-thumb { background: #1558C9; }
     body.theme-light ::-webkit-scrollbar-thumb:hover { background: #1048aa; }
   </style>
+  <link rel="stylesheet" href="light-theme.css" />
 </head>
 <body class="text-gray-300 min-h-screen relative">
 
@@ -579,13 +580,13 @@
             <span class="text-fuchsia-500 mr-1">./</span>Bio
           </a>
           <a href="posts.html" class="hover-neon text-gray-400 font-mono text-sm tracking-wide uppercase transition-all duration-300">
-            <span class="text-violet-500 mr-1">./</span>Posts
+            <span class="text-cyan-500 mr-1">./</span>Posts
           </a>
           <a href="https://github.com/Grucci" target="_blank" class="hover-neon text-gray-400 font-mono text-sm tracking-wide uppercase transition-all duration-300">
-            <span class="text-cyan-500 mr-1">./</span>GitHub <span aria-hidden="true">↗</span>
+            <span class="text-fuchsia-500 mr-1">./</span>GitHub <span aria-hidden="true">↗</span>
           </a>
           <a href="https://www.linkedin.com/in/felipe-grucci-libona/" target="_blank" class="hover-neon text-gray-400 font-mono text-sm tracking-wide uppercase transition-all duration-300">
-            <span class="text-fuchsia-500 mr-1">./</span>LinkedIn <span aria-hidden="true">↗</span>
+            <span class="text-cyan-500 mr-1">./</span>LinkedIn <span aria-hidden="true">↗</span>
           </a>
           <button id="theme-toggle" type="button" class="theme-toggle clip-corner-sm" aria-label="Alternar tema">
             <span id="theme-icon" aria-hidden="true">☀</span>
@@ -720,27 +721,27 @@
 
   <!-- ══════════ BIO SECTION ══════════ -->
   <section id="bio" class="py-24 relative">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="w-full px-4 sm:px-6 lg:px-8">
+      <div class="grid items-start gap-12 lg:grid-cols-2 xl:gap-16">
+        <div class="space-y-8">
+          <div class="flex items-center gap-4">
+            <div class="font-mono text-fuchsia-500 text-sm">[01]</div>
+            <h2 class="font-display text-2xl font-bold text-white uppercase tracking-widest">Sobre Mim</h2>
+            <div class="flex-1 section-divider"></div>
+          </div>
 
-      <!-- Section header -->
-      <div class="flex items-center gap-4 mb-12">
-        <div class="font-mono text-fuchsia-500 text-sm">[01]</div>
-        <h2 class="font-display text-2xl font-bold text-white uppercase tracking-widest">Sobre Mim</h2>
-        <div class="flex-1 section-divider"></div>
-      </div>
-
-      <div class="grid md:grid-cols-2 gap-8">
+          <div class="grid gap-6">
 
         <!-- Bio card -->
         <div class="neon-border-cyan p-6 clip-corner relative corner-tl corner-br">
           <div class="font-mono text-xs text-cyan-500/60 mb-4">// bio.json</div>
-          <div class="space-y-4 font-body text-gray-300 leading-relaxed">
+          <div class="space-y-5 font-body text-lg lg:text-xl text-gray-300 leading-relaxed">
             <p>
-              Sou <span class="text-cyan-400 font-semibold">Felipe Grucci</span>, IT Infrastructure Engineer Specialist com foco em
+              Sou <span class="text-cyan-400 font-semibold bio-highlight">Felipe Grucci</span>, IT Infrastructure Engineer Specialist com foco em
               ambientes cloud de alta disponibilidade e escalabilidade.
             </p>
             <p>
-              Atualmente faço parte do time de <span class="text-fuchsia-400">Infraestrutura</span>
+              Atualmente faço parte do time de <span class="text-fuchsia-400 bio-highlight">Infraestrutura</span>
               no <strong class="text-white">Bradesco</strong>, onde trabalho com automação e
               modernização de infraestrutura.
             </p>
@@ -774,7 +775,7 @@
           <div class="space-y-4">
             <!-- Skill bars -->
             <!-- <div>
-              <div class="flex justify-between font-mono text-xs mb-1">
+              <div class="flex justify-between font-mono text-sm mb-2">
                 <span class="text-gray-400">Kubernetes</span>
                 <span class="text-cyan-400">████████░░ 85%</span>
               </div>
@@ -783,7 +784,7 @@
               </div>
             </div> -->
             <div>
-              <div class="flex justify-between font-mono text-xs mb-1">
+              <div class="flex justify-between font-mono text-sm font-semibold mb-2">
                 <span class="text-gray-400">Terraform</span>
                 <span class="text-fuchsia-400">████████░░ 89%</span>
               </div>
@@ -792,7 +793,7 @@
               </div>
             </div>
             <div>
-              <div class="flex justify-between font-mono text-xs mb-1">
+              <div class="flex justify-between font-mono text-sm font-semibold mb-2">
                 <span class="text-gray-400">AWS</span>
                 <span class="text-violet-400">█████████░ 80%</span>
               </div>
@@ -801,18 +802,18 @@
               </div>
             </div>
             <div>
-              <div class="flex justify-between font-mono text-xs mb-1">
+              <div class="flex justify-between font-mono text-sm font-semibold mb-2">
                 <span class="text-gray-400">Azure</span>
-                <span class="text-cyan-400">███████░░░ 80%</span>
+                <span class="text-fuchsia-400">███████░░░ 80%</span>
               </div>
               <div class="h-1 bg-gray-800 rounded-full overflow-hidden">
                 <div class="skill-bar-fill h-full rounded-full" style="width: 75%"></div>
               </div>
             </div>
             <div>
-              <div class="flex justify-between font-mono text-xs mb-1">
+              <div class="flex justify-between font-mono text-sm font-semibold mb-2">
                 <span class="text-gray-400">Git / GitOps</span>
-                <span class="text-green-400">████████░░ 88%</span>
+                <span class="text-violet-400">████████░░ 88%</span>
               </div>
               <div class="h-1 bg-gray-800 rounded-full overflow-hidden">
                 <div class="skill-bar-fill h-full rounded-full" style="width: 88%"></div>
@@ -824,38 +825,35 @@
           <div class="mt-6">
             <div class="font-mono text-xs text-gray-600 mb-3">// stack</div>
             <div class="flex flex-wrap gap-2">
-              <span class="cyber-tag">Terraform</span>
+              <span class="cyber-tag cyber-tag-pink">Terraform</span>
               <span class="cyber-tag">AWS</span>
-              <span class="cyber-tag">Azure</span>
-              <span class="cyber-tag cyber-tag-pink">GitOps</span>
+              <span class="cyber-tag cyber-tag-pink">Azure</span>
+              <span class="cyber-tag">GitOps</span>
               <span class="cyber-tag cyber-tag-pink">CI/CD</span>
-              <span class="cyber-tag cyber-tag-violet">Git</span>
-              <span class="cyber-tag">Windows</span>
-              <span class="cyber-tag cyber-tag-violet">Linux</span>
-              <span class="cyber-tag">Kubernetes</span>
+              <span class="cyber-tag">Git</span>
+              <span class="cyber-tag cyber-tag-pink">Windows</span>
+              <span class="cyber-tag">Linux</span>
+              <span class="cyber-tag cyber-tag-pink">Kubernetes</span>
               <span class="cyber-tag">Helm</span>
               <span class="cyber-tag cyber-tag-pink">Cloud</span>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+        </div>
 
-  <!-- ══════════ POSTS SECTION ══════════ -->
-  <section id="posts" class="py-24 relative">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <section id="posts" class="scroll-mt-24">
+          <div class="mb-8 flex items-center gap-4">
+            <div class="font-mono text-violet-500 text-sm">[02]</div>
+            <h2 class="font-display text-2xl font-bold text-white uppercase tracking-widest">Posts Recentes</h2>
+            <div class="flex-1 section-divider"></div>
+            <a href="posts.html" class="font-mono text-xs text-cyan-400 hover:text-cyan-300 uppercase tracking-wider transition-colors">Ver todos →</a>
+          </div>
 
-      <!-- Section header -->
-      <div class="flex items-center gap-4 mb-12">
-        <div class="font-mono text-violet-500 text-sm">[02]</div>
-        <h2 class="font-display text-2xl font-bold text-white uppercase tracking-widest">Posts Recentes</h2>
-        <div class="flex-1 section-divider"></div>
-        <a href="posts.html" class="font-mono text-xs text-cyan-400 hover:text-cyan-300 uppercase tracking-wider transition-colors">Ver todos →</a>
+          <!-- Recent posts are rendered in publication-date order -->
+          <div id="posts-grid" class="grid gap-6"></div>
+        </section>
       </div>
-
-      <!-- Recent posts are rendered in publication-date order -->
-      <div id="posts-grid" class="grid md:grid-cols-2 gap-6"></div>
     </div>
   </section>
 
@@ -991,7 +989,7 @@
         `<span class="cyber-tag ${tagClass(t)}">${t}</span>`
       ).join('');
       return `
-        <a href="post.html?post=${post.slug}" class="block group md:col-span-2">
+        <a href="post.html?post=${post.slug}" class="block group">
           <div class="post-card neon-border-cyan p-6 clip-corner relative overflow-hidden">
             <div class="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-2xl pointer-events-none"></div>
             <div class="flex flex-col sm:flex-row sm:items-start gap-4">
@@ -1082,7 +1080,7 @@
       } catch (err) {
         console.error('Erro ao carregar posts:', err);
         document.getElementById('posts-grid').innerHTML =
-          `<div class="col-span-2 text-center font-mono text-xs text-red-400 py-8">Erro ao carregar posts.</div>`;
+          `<div class="col-span-full text-center font-mono text-xs text-red-400 py-8">Erro ao carregar posts.</div>`;
       }
     }
 
@@ -1096,9 +1094,9 @@
         card.addEventListener('mouseenter', function() {
           const isLight = document.body.classList.contains('theme-light');
           this.style.boxShadow = isLight
-            ? '0 0 0 1px rgba(21, 88, 201, 0.16), 0 10px 24px rgba(21, 88, 201, 0.13)'
+            ? '0 0 0 1px rgba(255, 75, 50, 0.18), 0 8px 22px rgba(23, 25, 28, 0.14)'
             : '0 0 0 1px rgba(212, 255, 36, 0.18), 0 0 24px rgba(21, 88, 201, 0.2)';
-          this.style.borderColor = isLight ? 'rgba(21, 88, 201, 0.55)' : '#D4FF24';
+          this.style.borderColor = isLight ? '#FF4B32' : '#D4FF24';
         });
 
         card.addEventListener('mouseleave', resetStyle);
