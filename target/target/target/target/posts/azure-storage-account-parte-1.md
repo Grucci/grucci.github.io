@@ -12,9 +12,9 @@ featured: true
 
 ![Microsoft Azure Storage Account](Azure-storage-account-part-1.png)
 
-Depois de algumas mudanças no trabalho, comecei a fazer parte do time responsável pelos produtos relacionados a Storage, o que me levou a novos desafios e oportunidadesde aprofundar meus conhecimentos sobre os serviçoes de armazenamento disponíveis nos diversos Cloud Providers.
+Depois de algumas mudanças no trabalho, comecei a fazer parte do time responsável pelos produtos relacionados a Storage, o que me levou a novos desafios e oportunidades de aprofundar meus conhecimentos sobre os serviços de armazenamento disponíveis nos diversos Cloud Providers.
 
-Com isso surgiu a necessidade de entender melhor não apenas os produtos com os quais passaria a trabalhar, mas também suas arquiteturas, caractéristicas, possibilidades de utilização e os principais pontos de atençãoem ambientes corporativos.
+Com isso, surgiu a necessidade de entender melhor não apenas os produtos com os quais passaria a trabalhar, mas também suas arquiteturas, características, possibilidades de utilização e os principais pontos de atenção em ambientes corporativos.
 
 Um dos primeiros assuntos que estou me dedicando a estudar é o *Azure Storage Account*, principalmente pela quantidade de demandas relacionadas a esse serviço.
 
@@ -24,17 +24,17 @@ Uma Azure Storage Account é um recurso de infraestrutura responsável por dispo
 
 Ele funciona como uma estrutura lógica que reúne diferentes serviços de armazenamento, permitindo que aplicações, usuários e outros recursos de nuvem armazenem e acessem informações de maneira escalável e segura.
 
-É possível trabalhar com diferentes tipos de dadaos e necessidades, como:
+É possível trabalhar com diferentes tipos de dados e necessidades, como:
 
 * Arquivos e documentos
 * Imagens e Vídeos
-* Banckups e Arquivos históricos
+* Backups e Arquivos históricos
 * Logs de aplicações e Infraestrutura
 * Mensagens utilizadas na comunicação entre sistemas
-* Dadsos estruturados e não estruturados
+* Dados estruturados e não estruturados
 * Compartilhamentos de arquivos utilizados por aplicações e servidores
 
-Uma característica importante é que a Storage Account não representa simplesmente um disco virtual ou um espaço de armarzenamento. Ele disponibiliza diferentes serviços, cada um desenvolvido para atender padrões de utilização e necessidades de arquitetura diferentes.
+Uma característica importante é que a Storage Account não representa simplesmente um disco virtual ou um espaço de armazenamento. Ele disponibiliza diferentes serviços, cada um desenvolvido para atender padrões de utilização e necessidades de arquitetura diferentes.
 
 Principais serviços:
 
@@ -49,11 +49,11 @@ Cada serviço possui características específicas de desempenho, acesso, escala
 
 Azure Storage Account é uma alternativa para armazenar e disponibilizar dados na nuvem.
 
-Ele permite que aplicações e outros serviços Azure utilizem recursos de armazenamento sem que seja necessário adminitrsar toda a infraestrutura física envolvida nesse processo.
+Ele permite que aplicações e outros serviços Azure utilizem recursos de armazenamento sem que seja necessário administrar toda a infraestrutura física envolvida nesse processo.
 
 Além disso, oferece diferentes possibilidades de configuração para atender necessidades relacionadas à disponibilidade, segurança, desempenho e custo.
 
-Um ponto importante é entender que não se trata apenas de criar uma conta e comçar a armazenas arquivos. Existem configurações e decisões que podem impactar diretamente a forma como os dados serão acessados, protegidos e cobrados.
+Um ponto importante é entender que não se trata apenas de criar uma conta e começar a armazenar arquivos. Existem configurações e decisões que podem impactar diretamente a forma como os dados serão acessados, protegidos e cobrados.
 
 ## Qual o papel do Storage Account e como é organizado?
 
@@ -86,7 +86,7 @@ Entre essas configurações, encontramos:
 
 ## Quando utilizar uma Storage Account?
 
-Dependendo da necessidade da solução o Storage Account pode ser utilizado em diferentes cenários.
+Dependendo da necessidade da solução, o Storage Account pode ser utilizado em diferentes cenários.
 
 Alguns exemplos que ajudam a entender suas possibilidades:
 
@@ -97,7 +97,7 @@ Alguns exemplos que ajudam a entender suas possibilidades:
 * Comunicação entre componentes de uma aplicação por meio de filas
 * Armazenamento de dados estruturados
 
-Como o Storage Account possui diferentes serviços dentro do seu ecossistema, nem toda necessidade de armazenamento precisa ser resolvida da mesma maneira e por isso é importante conhecer as características de cada serviço antes de decidir qual utilizar.
+Como o Storage Account possui diferentes serviços dentro do seu ecossistema, nem toda necessidade de armazenamento precisa ser resolvida da mesma maneira e, por isso, é importante conhecer as características de cada serviço antes de decidir qual utilizar.
 
 ---
 

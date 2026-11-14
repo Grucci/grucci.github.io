@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Posts · Felipe Grucci</title>
+  <meta name="description" content="Todos os artigos publicados por Felipe Grucci sobre cloud, infraestrutura, Terraform, AWS e Azure." />
+  <link rel="icon" type="image/png" href="https://avatars.githubusercontent.com/u/29503652?v=4" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            mono: ['"Share Tech Mono"', 'monospace'],
+            body: ['Rajdhani', 'sans-serif'],
+            display: ['Orbitron', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --midnight-black: #030407;
+      --cobalt-blue: #1558C9;
+      --acid-lime: #D4FF24;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
+      background: var(--midnight-black);
+      color: #d1d5db;
+      font-family: 'Rajdhani', sans-serif;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    body::before {
+      position: fixed;
+      z-index: 0;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(21, 88, 201, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(21, 88, 201, 0.1) 1px, transparent 1px);
+      background-size: 40px 40px;
+      content: '';
+      pointer-events: none;
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--midnight-black); }
+    ::-webkit-scrollbar-thumb { border-radius: 3px; background: rgba(21, 88, 201, 0.8); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--acid-lime); }
+
+    .navbar-blur {
+      border-bottom: 1px solid rgba(21, 88, 201, 0.35);
+      background: rgba(3, 4, 7, 0.9);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .clip-corner-sm {
+      clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+    }
+
+    .clip-corner {
+      clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+    }
+
+    .theme-toggle {
+      display: inline-flex;
+      width: 40px;
+      height: 40px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(21, 88, 201, 0.55);
+      background: rgba(3, 4, 7, 0.6);
+      color: var(--acid-lime);
+      font-size: 1.1rem;
+      transition: all 0.25s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 12px rgba(21, 88, 201, 0.25);
+    }
+
+    #mobile-menu {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.4s ease, opacity 0.4s ease;
+    }
+
+    #mobile-menu.open {
+      max-height: 440px;
+      opacity: 1;
+    }
+
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(21, 88, 201, 0.8), rgba(212, 255, 36, 0.65), transparent);
+    }
+
+    .filter-panel {
+      border: 1px solid rgba(21, 88, 201, 0.32);
+      background: rgba(8, 13, 24, 0.72);
+    }
+
+    .filter-section + .filter-section {
+      border-top: 1px solid rgba(148, 163, 184, 0.18);
+    }
+
+    .filter-heading { color: #87adff; }
+
+    .filter-option {
+      color: #aab4c8;
+      transition: color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .filter-option:hover,
+    .filter-option[aria-pressed="true"] {
+      background: rgba(21, 88, 201, 0.2);
+      color: var(--acid-lime);
+    }
+
+    .filter-option[aria-pressed="true"] .filter-arrow { color: var(--acid-lime); }
+    .filter-count { color: #b6a2ff; }
+
+    .tag-filter {
+      border: 1px solid rgba(21, 88, 201, 0.45);
+      background: rgba(21, 88, 201, 0.08);
+      color: #a9c5ff;
+      transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .tag-filter:hover,
+    .tag-filter[aria-pressed="true"] {
+      border-color: var(--acid-lime);
+      background: rgba(212, 255, 36, 0.1);
+      color: var(--acid-lime);
+    }
+
+    .search-input {
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: rgba(3, 4, 7, 0.65);
+      color: #e2e8f0;
+    }
+
+    .search-input:focus {
+      border-color: var(--cobalt-blue);
+      outline: 2px solid rgba(21, 88, 201, 0.22);
+      outline-offset: 1px;
+    }
+
+    .page-glow {
+      background:
+        radial-gradient(ellipse at 18% 0%, rgba(21, 88, 201, 0.18), transparent 42%),
+        radial-gradient(ellipse at 90% 25%, rgba(212, 255, 36, 0.06), transparent 35%);
+    }
+
+    .post-card {
+      border: 1px solid rgba(21, 88, 201, 0.38);
+      background: rgba(8, 13, 24, 0.86);
+      box-shadow: 0 0 0 1px rgba(21, 88, 201, 0.04);
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease, transform 0.25s ease;
+    }
+
+    .post-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--acid-lime);
+      box-shadow: 0 0 0 1px rgba(212, 255, 36, 0.18), 0 10px 24px rgba(21, 88, 201, 0.18);
+    }
+
+    .post-tag {
+      display: inline-flex;
+      border: 1px solid rgba(21, 88, 201, 0.45);
+      background: rgba(21, 88, 201, 0.1);
+      color: #87adff;
+    }
+
+    .post-tag-lime {
+      border-color: rgba(212, 255, 36, 0.42);
+      background: rgba(212, 255, 36, 0.08);
+      color: var(--acid-lime);
+    }
+
+    .post-link { color: #87adff; }
+    .post-card:hover .post-link { color: var(--acid-lime); }
+    .theme-current { color: var(--acid-lime); }
+    .brand-word { color: var(--acid-lime); }
+    .brand-dot { color: var(--cobalt-blue); }
+    .text-cyan-400, .text-cyan-500,
+    .text-blue-400, .text-blue-500,
+    .text-indigo-400, .text-indigo-500,
+    .text-violet-400, .text-violet-500 { color: #5d8ff2 !important; }
+    .text-fuchsia-400, .text-fuchsia-500,
+    .text-pink-400, .text-pink-500,
+    .text-green-400, .text-green-500,
+    .text-lime-400, .text-lime-500,
+    .text-yellow-400, .text-yellow-500 { color: var(--acid-lime) !important; }
+    .hover\:text-cyan-400:hover,
+    .hover\:text-cyan-300:hover { color: var(--acid-lime) !important; }
+
+    body.theme-light {
+      color-scheme: light;
+      background: #f1f5ff;
+      color: #334155;
+    }
+
+    body.theme-light::before {
+      background-image:
+        linear-gradient(rgba(21, 88, 201, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(21, 88, 201, 0.12) 1px, transparent 1px);
+    }
+
+    body.theme-light::-webkit-scrollbar-track { background: #f1f5ff; }
+    body.theme-light::-webkit-scrollbar-thumb { background: #1558C9; }
+    body.theme-light::-webkit-scrollbar-thumb:hover { background: #1048aa; }
+
+    body.theme-light .navbar-blur {
+      border-bottom-color: rgba(21, 88, 201, 0.22);
+      background: rgba(241, 245, 255, 0.92);
+    }
+
+    body.theme-light .theme-toggle {
+      border-color: rgba(21, 88, 201, 0.45);
+      background: rgba(255, 255, 255, 0.86);
+      color: #1048aa;
+    }
+
+    body.theme-light .post-card {
+      border-color: rgba(21, 88, 201, 0.3);
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 6px 18px rgba(21, 88, 201, 0.08);
+    }
+
+    body.theme-light .post-card:hover {
+      border-color: #1558C9;
+      background: #fff;
+      box-shadow: 0 0 0 1px rgba(21, 88, 201, 0.16), 0 10px 24px rgba(21, 88, 201, 0.13);
+    }
+
+    body.theme-light .filter-panel {
+      border-color: rgba(21, 88, 201, 0.24);
+      background: rgba(255, 255, 255, 0.82);
+    }
+
+    body.theme-light .filter-section + .filter-section { border-top-color: rgba(100, 116, 139, 0.2); }
+    body.theme-light .filter-heading { color: #1558C9; }
+    body.theme-light .filter-option { color: #475569; }
+    body.theme-light .filter-option:hover,
+    body.theme-light .filter-option[aria-pressed="true"] { background: rgba(21, 88, 201, 0.1); color: #1048aa; }
+    body.theme-light .filter-option[aria-pressed="true"] .filter-arrow { color: #1048aa; }
+    body.theme-light .filter-count { color: #526a06; }
+
+    body.theme-light .tag-filter {
+      border-color: rgba(21, 88, 201, 0.35);
+      background: rgba(21, 88, 201, 0.05);
+      color: #1048aa;
+    }
+
+    body.theme-light .tag-filter:hover,
+    body.theme-light .tag-filter[aria-pressed="true"] {
+      border-color: #1558C9;
+      background: rgba(212, 255, 36, 0.28);
+      color: #526a06;
+    }
+
+    body.theme-light .search-input {
+      border-color: rgba(21, 88, 201, 0.32);
+      background: rgba(255, 255, 255, 0.9);
+      color: #0f172a;
+    }
+
+    body.theme-light .post-tag-lime {
+      border-color: rgba(126, 158, 0, 0.4);
+      background: rgba(212, 255, 36, 0.28);
+      color: #526a06;
+    }
+
+    body.theme-light .brand-word { color: #526a06; }
+    body.theme-light .brand-dot { color: #1558C9; }
+    body.theme-light .text-white { color: #0f172a !important; }
+    body.theme-light .text-gray-300,
+    body.theme-light .text-gray-400 { color: #475569 !important; }
+    body.theme-light .text-gray-500,
+    body.theme-light .text-gray-600 { color: #64748b !important; }
+    body.theme-light .text-cyan-400, body.theme-light .text-cyan-500,
+    body.theme-light .text-blue-400, body.theme-light .text-blue-500,
+    body.theme-light .text-indigo-400, body.theme-light .text-indigo-500,
+    body.theme-light .text-violet-400, body.theme-light .text-violet-500 { color: #1558C9 !important; }
+    body.theme-light .text-fuchsia-400, body.theme-light .text-fuchsia-500,
+    body.theme-light .text-pink-400, body.theme-light .text-pink-500,
+    body.theme-light .text-green-400, body.theme-light .text-green-500,
+    body.theme-light .text-lime-400, body.theme-light .text-lime-500,
+    body.theme-light .text-yellow-400, body.theme-light .text-yellow-500 { color: #526a06 !important; }
+    body.theme-light .theme-current { color: #526a06; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body class="min-h-screen relative">
+  <nav class="navbar-blur fixed top-0 left-0 right-0 z-50">
+    <div class="w-full px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <img src="https://avatars.githubusercontent.com/u/29503652?v=4" alt="Felipe Grucci" class="w-8 h-8 rounded-full object-cover border border-cyan-500/40" />
+          <span class="font-display text-sm font-bold tracking-widest uppercase">
+            <span class="brand-word">GRUCCI</span><span class="brand-dot">.</span><span class="brand-word">DEV</span>
+          </span>
+        </a>
+
+        <div class="hidden md:flex items-center gap-4 lg:gap-6">
+          <a href="index.html" class="font-mono text-sm tracking-wide uppercase text-gray-400 transition-colors hover:text-cyan-400"><span class="text-cyan-500 mr-1">./</span>Home</a>
+          <a href="index.html#bio" class="font-mono text-sm tracking-wide uppercase text-gray-400 transition-colors hover:text-cyan-400"><span class="text-fuchsia-500 mr-1">./</span>Bio</a>
+          <a href="posts.html" aria-current="page" class="font-mono text-sm tracking-wide uppercase text-gray-400 transition-colors hover:text-cyan-400"><span class="text-violet-500 mr-1">./</span>Posts</a>
+          <a href="https://github.com/Grucci" target="_blank" rel="noopener noreferrer" class="font-mono text-sm tracking-wide uppercase text-gray-400 transition-colors hover:text-cyan-400"><span class="text-cyan-500 mr-1">./</span>GitHub ↗</a>
+          <a href="https://www.linkedin.com/in/felipe-grucci-libona/" target="_blank" rel="noopener noreferrer" class="font-mono text-sm tracking-wide uppercase text-gray-400 transition-colors hover:text-cyan-400"><span class="text-fuchsia-500 mr-1">./</span>LinkedIn ↗</a>
+          <button id="theme-toggle" type="button" class="theme-toggle clip-corner-sm" aria-label="Alternar tema"><span id="theme-icon" aria-hidden="true">☀</span></button>
+        </div>
+
+        <button id="hamburger" class="md:hidden text-cyan-400 focus:outline-none" type="button" aria-label="Abrir menu" aria-expanded="false">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path id="ham-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-menu" class="md:hidden border-t border-cyan-500/10">
+      <div class="px-4 py-4 space-y-3">
+        <a href="index.html" class="block border-b border-gray-800 py-2 font-mono text-sm text-gray-400 transition-colors hover:text-cyan-400"><span class="text-cyan-500">./</span> Home</a>
+        <a href="index.html#bio" class="block border-b border-gray-800 py-2 font-mono text-sm text-gray-400 transition-colors hover:text-cyan-400"><span class="text-fuchsia-500">./</span> Bio</a>
+        <a href="posts.html" aria-current="page" class="block border-b border-gray-800 py-2 font-mono text-sm text-gray-400 transition-colors hover:text-cyan-400"><span class="text-violet-500">./</span> Posts</a>
+        <a href="https://github.com/Grucci" target="_blank" rel="noopener noreferrer" class="block border-b border-gray-800 py-2 font-mono text-sm text-gray-400 transition-colors hover:text-cyan-400"><span class="text-cyan-500">./</span> GitHub ↗</a>
+        <a href="https://www.linkedin.com/in/felipe-grucci-libona/" target="_blank" rel="noopener noreferrer" class="block py-2 font-mono text-sm text-gray-400 transition-colors hover:text-cyan-400"><span class="text-fuchsia-500">./</span> LinkedIn ↗</a>
+        <button id="mobile-theme-toggle" type="button" class="theme-toggle clip-corner-sm" aria-label="Alternar tema"><span id="mobile-theme-icon" aria-hidden="true">☀</span></button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page-glow relative z-10 min-h-screen pt-28 pb-20">
+    <div class="w-full max-w-none px-5 sm:px-8 xl:px-12 2xl:px-16">
+      <div class="mb-10">
+        <div class="mb-3 font-mono text-sm uppercase tracking-widest text-cyan-400"><span class="text-gray-500">root@grucci:~/blog$</span> ls posts/</div>
+        <div class="flex items-center gap-4">
+          <h1 class="font-display text-3xl sm:text-4xl font-black uppercase tracking-widest text-white">Todos os Posts</h1>
+          <div class="section-divider flex-1"></div>
+        </div>
+        <p class="mt-4 max-w-2xl text-lg text-gray-400">Artigos publicados sobre cloud, infraestrutura, automação e tecnologia.</p>
+      </div>
+
+      <div class="grid gap-8 xl:grid-cols-[minmax(0,1fr)_320px] 2xl:gap-10">
+        <aside id="filter-sidebar" class="filter-panel order-1 h-fit clip-corner-sm xl:order-2" aria-label="Filtros de posts">
+          <section class="filter-section p-5">
+            <h2 class="filter-heading mb-3 font-display text-lg font-bold">/busca</h2>
+            <label class="sr-only" for="post-search">Buscar posts</label>
+            <div class="relative">
+              <input id="post-search" class="search-input w-full px-3 py-3 pr-11 font-mono text-sm" type="search" placeholder="Buscar posts..." autocomplete="off" />
+              <svg class="absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="11" cy="11" r="7" stroke-width="2"></circle>
+                <path d="m16 16 4 4" stroke-linecap="round" stroke-width="2"></path>
+              </svg>
+            </div>
+          </section>
+
+          <section class="filter-section p-5">
+            <h2 class="filter-heading mb-3 font-display text-lg font-bold">/categorias</h2>
+            <div id="category-filters" class="space-y-1"></div>
+          </section>
+
+          <section class="filter-section p-5">
+            <h2 class="filter-heading mb-3 font-display text-lg font-bold">/arquivo</h2>
+            <div id="year-filters" class="space-y-1"></div>
+          </section>
+
+          <section class="filter-section p-5">
+            <h2 class="filter-heading mb-3 font-display text-lg font-bold">/tags</h2>
+            <div id="tag-filters" class="flex flex-wrap gap-2"></div>
+          </section>
+        </aside>
+
+        <section class="order-2 xl:order-1" aria-label="Artigos publicados">
+          <div class="mb-5 flex items-center justify-between gap-4">
+            <div id="posts-count" class="font-mono text-xs uppercase tracking-wider text-gray-500" aria-live="polite"></div>
+            <button id="clear-filters" type="button" class="hidden font-mono text-xs uppercase tracking-wider text-cyan-400 transition-colors hover:text-lime-400">Limpar filtros</button>
+          </div>
+          <div id="posts-list" class="grid content-start gap-5 xl:grid-cols-2" aria-live="polite">
+            <p class="font-mono text-sm text-gray-500">Carregando posts...</p>
+          </div>
+        </section>
+      </div>
+
+      <a href="index.html" class="mt-12 inline-flex font-mono text-sm uppercase tracking-widest text-cyan-400 transition-colors hover:text-lime-400">← Voltar ao início</a>
+    </div>
+  </main>
+
+  <footer class="relative z-10 border-t border-gray-800/50 py-8">
+    <div class="w-full max-w-none px-5 sm:px-8 xl:px-12 2xl:px-16 font-mono text-xs text-gray-600">
+      <span class="text-cyan-500">&copy; 2026</span> Felipe Grucci · Construído com <span class="text-fuchsia-500">❤</span> e HTML puro
+    </div>
+  </footer>
+
+  <script>
+    const THEME_KEY = 'grucci-theme';
+    const themeToggle = document.getElementById('theme-toggle');
+    const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const mobileThemeIcon = document.getElementById('mobile-theme-icon');
+
+    function applyTheme(theme) {
+      const isLight = theme === 'light';
+      document.body.classList.toggle('theme-light', isLight);
+      const icon = isLight ? '☾' : '☀';
+      if (themeIcon) themeIcon.textContent = icon;
+      if (mobileThemeIcon) mobileThemeIcon.textContent = icon;
+      localStorage.setItem(THEME_KEY, theme);
+    }
+
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(savedTheme || (prefersDark ? 'dark' : 'light'));
+
+    function toggleTheme() {
+      applyTheme(document.body.classList.contains('theme-light') ? 'dark' : 'light');
+    }
+
+    themeToggle.addEventListener('click', toggleTheme);
+    mobileThemeToggle.addEventListener('click', toggleTheme);
+
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const hamIcon = document.getElementById('ham-icon');
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', String(isOpen));
+      hamburger.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+      hamIcon.setAttribute('d', isOpen
+        ? 'M6 18L18 6M6 6l12 12'
+        : 'M4 6h16M4 12h16M4 18h16'
+      );
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        hamburger.setAttribute('aria-label', 'Abrir menu');
+        hamIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+      });
+    });
+
+    const tagColors = new Set(['Terraform', 'IaC', 'CI/CD', 'GitOps', 'DevOps', 'Azure']);
+    const filters = { query: '', category: '', year: '', tag: '' };
+    let allPosts = [];
+
+    function postTimestamp(post) {
+      const match = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(post.date || '');
+      if (!match) return 0;
+      return new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3])).getTime();
+    }
+
+    function postYear(post) {
+      const match = /^(\d{4})-\d{1,2}-\d{1,2}$/.exec(post.date || '');
+      return match ? match[1] : '';
+    }
+
+    function formatDate(dateString) {
+      const match = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(dateString || '');
+      if (!match) return 'Data não informada';
+      const date = new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+      return new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: 'short', year: 'numeric' }).format(date);
+    }
+
+    function createPostCard(post) {
+      if (!post || typeof post.slug !== 'string' || typeof post.title !== 'string') {
+        throw new Error('Cada post precisa ter slug e título válidos.');
+      }
+
+      const link = document.createElement('a');
+      link.className = 'post-card block p-5 clip-corner';
+      link.href = `post.html?post=${encodeURIComponent(post.slug)}`;
+
+      const meta = document.createElement('div');
+      meta.className = 'mb-3 flex flex-wrap items-center gap-2';
+
+      const date = document.createElement('time');
+      date.className = 'mr-1 font-mono text-xs text-gray-500';
+      date.dateTime = post.date || '';
+      date.textContent = formatDate(post.date);
+      meta.appendChild(date);
+
+      if (post.category) {
+        const category = document.createElement('span');
+        category.className = 'post-tag post-tag-lime px-2 py-0.5 font-mono text-xs';
+        category.textContent = post.category;
+        meta.appendChild(category);
+      }
+
+      if (Array.isArray(post.tags)) {
+        post.tags.forEach(tag => {
+          const tagElement = document.createElement('span');
+          tagElement.className = `post-tag ${tagColors.has(tag) ? 'post-tag-lime' : ''} px-2 py-0.5 font-mono text-xs`;
+          tagElement.textContent = tag;
+          meta.appendChild(tagElement);
+        });
+      }
+
+      if (post.featured) {
+        const featured = document.createElement('span');
+        featured.className = 'post-tag post-tag-lime px-2 py-0.5 font-mono text-xs uppercase';
+        featured.textContent = 'Destaque';
+        meta.appendChild(featured);
+      }
+
+      const heading = document.createElement('h2');
+      heading.className = 'mb-2 flex items-start gap-3 font-display text-lg font-bold text-white';
+      const emoji = document.createElement('span');
+      emoji.className = 'font-sans text-xl';
+      emoji.setAttribute('aria-hidden', 'true');
+      emoji.textContent = post.emoji || '📝';
+      heading.append(emoji, document.createTextNode(post.title));
+
+      const summary = document.createElement('p');
+      summary.className = 'text-sm leading-relaxed text-gray-400';
+      summary.textContent = post.summary || '';
+
+      const readMore = document.createElement('div');
+      readMore.className = 'post-link mt-4 font-mono text-xs uppercase tracking-wider transition-colors';
+      readMore.textContent = 'Ler artigo →';
+
+      link.append(meta, heading, summary, readMore);
+      return link;
+    }
+
+    function createFilterButton(type, value, label, count, active, isTag = false) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.dataset.filterType = type;
+      button.dataset.filterValue = value;
+      button.setAttribute('aria-pressed', String(active));
+
+      if (isTag) {
+        button.className = 'tag-filter px-2 py-1 font-mono text-xs';
+        button.textContent = label;
+        return button;
+      }
+
+      button.className = 'filter-option flex w-full items-center gap-2 px-2 py-1 font-mono text-sm text-left';
+      const arrow = document.createElement('span');
+      arrow.className = 'filter-arrow text-cyan-400';
+      arrow.setAttribute('aria-hidden', 'true');
+      arrow.textContent = '→';
+      const name = document.createElement('span');
+      name.className = 'flex-1';
+      name.textContent = label;
+      const total = document.createElement('span');
+      total.className = 'filter-count';
+      total.textContent = String(count);
+      button.append(arrow, name, total);
+      return button;
+    }
+
+    function renderFilters() {
+      const categories = new Map();
+      const years = new Map();
+      const tags = new Map();
+
+      allPosts.forEach(post => {
+        if (post.category) categories.set(post.category, (categories.get(post.category) || 0) + 1);
+        const year = postYear(post);
+        if (year) years.set(year, (years.get(year) || 0) + 1);
+        if (Array.isArray(post.tags)) {
+          post.tags.forEach(tag => tags.set(tag, (tags.get(tag) || 0) + 1));
+        }
+      });
+
+      const categoryFilters = document.getElementById('category-filters');
+      categoryFilters.replaceChildren(
+        createFilterButton('category', '', 'Todas', allPosts.length, !filters.category),
+        ...[...categories.entries()]
+          .sort(([a], [b]) => a.localeCompare(b, 'pt-BR'))
+          .map(([category, count]) => createFilterButton('category', category, category, count, filters.category === category))
+      );
+
+      const yearFilters = document.getElementById('year-filters');
+      yearFilters.replaceChildren(
+        createFilterButton('year', '', 'Todos os anos', allPosts.length, !filters.year),
+        ...[...years.entries()]
+          .sort(([a], [b]) => Number(b) - Number(a))
+          .map(([year, count]) => createFilterButton('year', year, year, count, filters.year === year))
+      );
+
+      const tagFilters = document.getElementById('tag-filters');
+      tagFilters.replaceChildren(
+        ...[...tags.keys()]
+          .sort((a, b) => a.localeCompare(b, 'pt-BR'))
+          .map(tag => createFilterButton('tag', tag, tag, tags.get(tag), filters.tag === tag, true))
+      );
+    }
+
+    function updatePostList() {
+      const normalizedQuery = filters.query.trim().toLocaleLowerCase('pt-BR');
+      const matchingPosts = allPosts.filter(post => {
+        if (filters.category && post.category !== filters.category) return false;
+        if (filters.year && postYear(post) !== filters.year) return false;
+        if (filters.tag && !(post.tags || []).includes(filters.tag)) return false;
+        if (!normalizedQuery) return true;
+
+        const searchableText = [
+          post.title,
+          post.summary,
+          post.category,
+          ...(post.tags || []),
+        ].join(' ').toLocaleLowerCase('pt-BR');
+        return searchableText.includes(normalizedQuery);
+      });
+
+      const list = document.getElementById('posts-list');
+      const count = document.getElementById('posts-count');
+      const clearButton = document.getElementById('clear-filters');
+      const fragment = document.createDocumentFragment();
+      matchingPosts.forEach(post => fragment.appendChild(createPostCard(post)));
+      list.replaceChildren(fragment);
+      count.textContent = `${matchingPosts.length} de ${allPosts.length} ${allPosts.length === 1 ? 'post publicado' : 'posts publicados'}`;
+      clearButton.classList.toggle('hidden', !filters.query && !filters.category && !filters.year && !filters.tag);
+
+      if (matchingPosts.length === 0) {
+        const emptyState = document.createElement('p');
+        emptyState.className = 'font-mono text-sm text-gray-500 md:col-span-2';
+        emptyState.textContent = 'Nenhum post encontrado com esses filtros.';
+        list.appendChild(emptyState);
+      }
+    }
+
+    function clearFilters() {
+      filters.query = '';
+      filters.category = '';
+      filters.year = '';
+      filters.tag = '';
+      document.getElementById('post-search').value = '';
+      renderFilters();
+      updatePostList();
+    }
+
+    document.getElementById('post-search').addEventListener('input', event => {
+      filters.query = event.currentTarget.value;
+      updatePostList();
+    });
+
+    document.getElementById('filter-sidebar').addEventListener('click', event => {
+      const button = event.target.closest('button[data-filter-type]');
+      if (!button) return;
+
+      const { filterType, filterValue } = button.dataset;
+      filters[filterType] = filters[filterType] === filterValue ? '' : filterValue;
+      renderFilters();
+      updatePostList();
+    });
+
+    document.getElementById('clear-filters').addEventListener('click', clearFilters);
+
+    async function loadPosts() {
+      const list = document.getElementById('posts-list');
+      const count = document.getElementById('posts-count');
+      try {
+        const response = await fetch('posts/index.json');
+        if (!response.ok) throw new Error(`Não foi possível carregar o manifesto (${response.status}).`);
+        allPosts = await response.json();
+        if (!Array.isArray(allPosts)) throw new Error('O manifesto de posts deve conter uma lista.');
+        allPosts = [...allPosts].sort((a, b) => postTimestamp(b) - postTimestamp(a));
+        renderFilters();
+        updatePostList();
+      } catch (error) {
+        console.error('Erro ao carregar a lista de posts:', error);
+        count.textContent = '';
+        list.innerHTML = '<p class="font-mono text-sm text-red-400">Não foi possível carregar os posts. Tente novamente mais tarde.</p>';
+      }
+    }
+
+    loadPosts();
+  </script>
+</body>
+</html>

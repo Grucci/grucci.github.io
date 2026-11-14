@@ -11,6 +11,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
+    const cobalt = {
+      50: '#eaf1ff', 100: '#d6e4ff', 200: '#b1ccff', 300: '#87adff',
+      400: '#5d8ff2', 500: '#1558C9', 600: '#1048aa', 700: '#0c388c',
+      800: '#092a6b', 900: '#061b48',
+    };
+    const acidLime = {
+      50: '#f8ffd6', 100: '#f0ffa8', 200: '#e8ff72', 300: '#ddff49',
+      400: '#D4FF24', 500: '#c1eb12', 600: '#9fca0d', 700: '#789a09',
+      800: '#526a06', 900: '#2b3903',
+    };
     tailwind.config = {
       theme: {
         extend: {
@@ -20,13 +30,24 @@
             display: ['Orbitron', 'sans-serif'],
           },
           colors: {
+            cyan: cobalt,
+            blue: cobalt,
+            indigo: cobalt,
+            violet: cobalt,
+            purple: cobalt,
+            fuchsia: acidLime,
+            pink: acidLime,
+            green: acidLime,
+            lime: acidLime,
+            yellow: acidLime,
             cyber: {
-              black: '#0a0a0f',
-              dark: '#0d0d1a',
-              navy: '#0f0f2e',
-              neon: '#00ffff',
-              pink: '#ff00ff',
-              violet: '#7b2fff',
+              black: '#030407',
+              dark: '#080d18',
+              navy: '#0b1730',
+              neon: '#1558C9',
+              pink: '#D4FF24',
+              violet: '#1558C9',
+              green: '#D4FF24',
             }
           }
         }
@@ -229,6 +250,60 @@
       .error-number { font-size: clamp(7rem, 34vw, 10rem); }
       .error-title { letter-spacing: 0.06em; }
     }
+
+    :root {
+      --midnight-black: #030407;
+      --cobalt-blue: #1558C9;
+      --acid-lime: #D4FF24;
+    }
+
+    body { background-color: var(--midnight-black); }
+    body::before {
+      background-image:
+        linear-gradient(rgba(21, 88, 201, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(21, 88, 201, 0.1) 1px, transparent 1px);
+    }
+    .navbar-blur { background: rgba(3, 4, 7, 0.9); border-bottom-color: rgba(21, 88, 201, 0.35); }
+    .hero-bg {
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(21, 88, 201, 0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(212, 255, 36, 0.08) 0%, transparent 40%),
+        radial-gradient(ellipse at 60% 80%, rgba(21, 88, 201, 0.12) 0%, transparent 40%),
+        linear-gradient(135deg, #030407 0%, #080d18 50%, #0b1730 100%);
+    }
+    .theme-toggle { border-color: rgba(21, 88, 201, 0.55); color: var(--acid-lime); }
+    .text-cyan-500, .text-blue-500, .text-indigo-500, .text-violet-500 { color: #87adff !important; }
+    .error-panel { background: rgba(8, 13, 24, 0.88); border-color: rgba(21, 88, 201, 0.52); box-shadow: 0 0 12px rgba(21, 88, 201, 0.16); }
+    .error-number {
+      background: linear-gradient(105deg, #1558C9 10%, #5d8ff2 48%, #D4FF24 90%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      filter: drop-shadow(3px 0 0 rgba(21, 88, 201, 0.32)) drop-shadow(-3px 0 0 rgba(212, 255, 36, 0.22));
+    }
+    .home-button { background: rgba(21, 88, 201, 0.14); border-color: rgba(21, 88, 201, 0.7); color: #87adff; }
+    .home-button:hover { background: rgba(21, 88, 201, 0.24); border-color: var(--acid-lime); box-shadow: 0 0 16px rgba(21, 88, 201, 0.28); }
+    ::-webkit-scrollbar-track { background: #030407; }
+    ::-webkit-scrollbar-thumb { background: rgba(21, 88, 201, 0.8); }
+    ::-webkit-scrollbar-thumb:hover { background: #D4FF24; }
+
+    body.theme-light { background-color: #eef3ff; }
+    body.theme-light::before {
+      background-image:
+        linear-gradient(rgba(21, 88, 201, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(21, 88, 201, 0.1) 1px, transparent 1px);
+    }
+    body.theme-light .navbar-blur { background: rgba(238, 243, 255, 0.92); border-bottom-color: rgba(21, 88, 201, 0.2); }
+    body.theme-light .hero-bg {
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(21, 88, 201, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(212, 255, 36, 0.14) 0%, transparent 40%),
+        linear-gradient(135deg, #eef3ff 0%, #f7f9ff 55%, #e8efff 100%);
+    }
+    body.theme-light .error-panel { background: rgba(255,255,255,.9); border-color: rgba(21,88,201,.35); }
+    body.theme-light .theme-toggle { background: rgba(255,255,255,.85); border-color: rgba(21,88,201,.45); color: #1048aa; }
+    body.theme-light .home-button { background: rgba(21,88,201,.08); border-color: rgba(21,88,201,.55); color: #1048aa; }
+    body.theme-light ::-webkit-scrollbar-track { background: #eef3ff; }
+    body.theme-light ::-webkit-scrollbar-thumb { background: #1558C9; }
   </style>
 </head>
 <body class="text-gray-300 min-h-screen relative">
@@ -245,7 +320,7 @@
         <div class="hidden md:flex items-center gap-8">
           <a href="index.html" class="text-gray-400 font-mono text-sm tracking-wide uppercase hover:text-cyan-400 transition-colors"><span class="text-cyan-500 mr-1">./</span>Home</a>
           <a href="index.html#bio" class="text-gray-400 font-mono text-sm tracking-wide uppercase hover:text-fuchsia-400 transition-colors"><span class="text-fuchsia-500 mr-1">./</span>Bio</a>
-          <a href="index.html#posts" class="text-gray-400 font-mono text-sm tracking-wide uppercase hover:text-violet-400 transition-colors"><span class="text-violet-500 mr-1">./</span>Posts</a>
+          <a href="posts.html" class="text-gray-400 font-mono text-sm tracking-wide uppercase hover:text-violet-400 transition-colors"><span class="text-violet-500 mr-1">./</span>Posts</a>
           <a href="https://github.com/Grucci" target="_blank" rel="noopener noreferrer" class="text-gray-400 font-mono text-sm tracking-wide uppercase hover:text-cyan-400 transition-colors"><span class="text-cyan-500 mr-1">./</span>GitHub <span aria-hidden="true">↗</span></a>
           <a href="https://www.linkedin.com/in/felipe-grucci-libona/" target="_blank" rel="noopener noreferrer" class="text-gray-400 font-mono text-sm tracking-wide uppercase hover:text-fuchsia-400 transition-colors"><span class="text-fuchsia-500 mr-1">./</span>LinkedIn <span aria-hidden="true">↗</span></a>
           <button id="theme-toggle" type="button" class="theme-toggle clip-corner-sm" aria-label="Alternar tema" title="Alternar tema"><span id="theme-icon" aria-hidden="true">☀</span></button>
@@ -262,7 +337,7 @@
       <div class="px-4 py-4 space-y-3 bg-cyber-black/95">
         <a href="index.html" class="block font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors py-2 border-b border-gray-800"><span class="text-cyan-500">./</span> Home</a>
         <a href="index.html#bio" class="block font-mono text-sm text-gray-400 hover:text-fuchsia-400 transition-colors py-2 border-b border-gray-800"><span class="text-fuchsia-500">./</span> Bio</a>
-        <a href="index.html#posts" class="block font-mono text-sm text-gray-400 hover:text-violet-400 transition-colors py-2 border-b border-gray-800"><span class="text-violet-500">./</span> Posts</a>
+        <a href="posts.html" class="block font-mono text-sm text-gray-400 hover:text-violet-400 transition-colors py-2 border-b border-gray-800"><span class="text-violet-500">./</span> Posts</a>
         <a href="https://github.com/Grucci" target="_blank" rel="noopener noreferrer" class="block font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors py-2"><span class="text-cyan-500">./</span> GitHub <span aria-hidden="true">↗</span></a>
         <a href="https://www.linkedin.com/in/felipe-grucci-libona/" target="_blank" rel="noopener noreferrer" class="block font-mono text-sm text-gray-400 hover:text-fuchsia-400 transition-colors py-2"><span class="text-fuchsia-500">./</span> LinkedIn <span aria-hidden="true">↗</span></a>
         <button id="mobile-theme-toggle" type="button" class="theme-toggle clip-corner-sm" aria-label="Alternar tema" title="Alternar tema"><span id="mobile-theme-icon" aria-hidden="true">☀</span></button>
@@ -325,6 +400,11 @@
       if (mobileThemeIcon) mobileThemeIcon.textContent = icon;
       localStorage.setItem(THEME_KEY, theme);
     }
+    body.theme-light .text-fuchsia-500,
+    body.theme-light .text-pink-500,
+    body.theme-light .text-green-500,
+    body.theme-light .text-lime-500,
+    body.theme-light .text-yellow-500 { color: #526a06 !important; }
 
     const savedTheme = localStorage.getItem(THEME_KEY);
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
