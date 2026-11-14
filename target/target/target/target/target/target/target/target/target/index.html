@@ -11,6 +11,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
+    const cobalt = {
+      50: '#eaf1ff', 100: '#d6e4ff', 200: '#b1ccff', 300: '#87adff',
+      400: '#5d8ff2', 500: '#1558C9', 600: '#1048aa', 700: '#0c388c',
+      800: '#092a6b', 900: '#061b48',
+    };
+    const acidLime = {
+      50: '#f8ffd6', 100: '#f0ffa8', 200: '#e8ff72', 300: '#ddff49',
+      400: '#D4FF24', 500: '#c1eb12', 600: '#9fca0d', 700: '#789a09',
+      800: '#526a06', 900: '#2b3903',
+    };
     tailwind.config = {
       theme: {
         extend: {
@@ -20,25 +30,35 @@
             display: ['Orbitron', 'sans-serif'],
           },
           colors: {
+            cyan: cobalt,
+            blue: cobalt,
+            indigo: cobalt,
+            violet: cobalt,
+            purple: cobalt,
+            fuchsia: acidLime,
+            pink: acidLime,
+            green: acidLime,
+            lime: acidLime,
+            yellow: acidLime,
             cyber: {
-              black: '#0a0a0f',
-              dark: '#0d0d1a',
-              navy: '#0f0f2e',
-              purple: '#1a0a2e',
-              neon: '#00ffff',
-              pink: '#ff00ff',
-              violet: '#7b2fff',
-              electric: '#00e5ff',
-              hot: '#ff006e',
-              yellow: '#ffdd00',
-              green: '#00ff88',
+              black: '#030407',
+              dark: '#080d18',
+              navy: '#0b1730',
+              purple: '#0b1730',
+              neon: '#1558C9',
+              pink: '#D4FF24',
+              violet: '#1558C9',
+              electric: '#1558C9',
+              hot: '#D4FF24',
+              yellow: '#D4FF24',
+              green: '#D4FF24',
             }
           },
           boxShadow: {
-            'neon-cyan': '0 0 5px #00ffff, 0 0 20px #00ffff44, 0 0 40px #00ffff22',
-            'neon-pink': '0 0 5px #ff00ff, 0 0 20px #ff00ff44, 0 0 40px #ff00ff22',
-            'neon-violet': '0 0 5px #7b2fff, 0 0 20px #7b2fff44',
-            'neon-green': '0 0 5px #00ff88, 0 0 20px #00ff8844',
+            'neon-cyan': '0 0 5px #1558C9, 0 0 20px #1558C944, 0 0 40px #1558C922',
+            'neon-pink': '0 0 5px #D4FF24, 0 0 20px #D4FF2444, 0 0 40px #D4FF2422',
+            'neon-violet': '0 0 5px #1558C9, 0 0 20px #1558C944',
+            'neon-green': '0 0 5px #D4FF24, 0 0 20px #D4FF2444',
           },
           animation: {
             'glitch': 'glitch 3s infinite',
@@ -50,10 +70,10 @@
           },
           keyframes: {
             glitch: {
-              '0%, 100%': { textShadow: '2px 0 #ff00ff, -2px 0 #00ffff' },
-              '25%': { textShadow: '-2px 0 #ff00ff, 2px 0 #00ffff' },
-              '50%': { textShadow: '2px 2px #ff00ff, -2px -2px #00ffff' },
-              '75%': { textShadow: '-2px -2px #ff00ff, 2px 2px #00ffff' },
+              '0%, 100%': { textShadow: '2px 0 #D4FF24, -2px 0 #1558C9' },
+              '25%': { textShadow: '-2px 0 #D4FF24, 2px 0 #1558C9' },
+              '50%': { textShadow: '2px 2px #D4FF24, -2px -2px #1558C9' },
+              '75%': { textShadow: '-2px -2px #D4FF24, 2px 2px #1558C9' },
             },
             /*
             scan: {
@@ -410,32 +430,153 @@
       border-bottom: 2px solid #ff00ff;
       border-right: 2px solid #ff00ff;
     }
+
+    :root {
+      --midnight-black: #030407;
+      --cobalt-blue: #1558C9;
+      --acid-lime: #D4FF24;
+    }
+
+    body { background-color: var(--midnight-black); }
+    body::before {
+      background-image:
+        linear-gradient(rgba(21, 88, 201, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(21, 88, 201, 0.1) 1px, transparent 1px);
+    }
+    ::-webkit-scrollbar-track { background: var(--midnight-black); }
+    ::-webkit-scrollbar-thumb { background: rgba(21, 88, 201, 0.8); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--acid-lime); }
+    .navbar-blur { background: rgba(3, 4, 7, 0.9); border-bottom-color: rgba(21, 88, 201, 0.35); }
+    .hero-bg {
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(21, 88, 201, 0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(212, 255, 36, 0.08) 0%, transparent 40%),
+        radial-gradient(ellipse at 60% 80%, rgba(21, 88, 201, 0.12) 0%, transparent 40%),
+        linear-gradient(135deg, #030407 0%, #080d18 50%, #0b1730 100%);
+    }
+    .theme-toggle { border-color: rgba(21, 88, 201, 0.55); color: var(--acid-lime); }
+    .theme-toggle:hover { box-shadow: 0 0 12px rgba(21, 88, 201, 0.25); }
+    .neon-border-cyan,
+    .neon-border-pink { border-color: rgba(21, 88, 201, 0.55); box-shadow: 0 0 8px rgba(21, 88, 201, 0.18), inset 0 0 12px rgba(21, 88, 201, 0.05); }
+    .neon-border-cyan:hover,
+    .neon-border-pink:hover { border-color: var(--acid-lime); box-shadow: 0 0 14px rgba(212, 255, 36, 0.22), inset 0 0 16px rgba(21, 88, 201, 0.08); }
+    .cyber-tag { background: rgba(21, 88, 201, 0.12); border-color: rgba(21, 88, 201, 0.55); color: #87adff; }
+    .cyber-tag:hover { background: rgba(21, 88, 201, 0.2); box-shadow: 0 0 10px rgba(21, 88, 201, 0.25); }
+    .cyber-tag-pink { background: rgba(212, 255, 36, 0.08); border-color: rgba(212, 255, 36, 0.42); color: var(--acid-lime); }
+    .cyber-tag-pink:hover { background: rgba(212, 255, 36, 0.16); box-shadow: 0 0 10px rgba(212, 255, 36, 0.2); }
+    .cyber-tag-violet { background: rgba(21, 88, 201, 0.1); border-color: rgba(21, 88, 201, 0.48); color: #87adff; }
+    .post-card { background: rgba(8, 13, 24, 0.86); }
+    .post-card:hover { border-color: var(--acid-lime); box-shadow: 0 0 0 1px rgba(212, 255, 36, 0.18), 0 0 24px rgba(21, 88, 201, 0.2); }
+    .avatar-ring { background: conic-gradient(var(--cobalt-blue), var(--acid-lime), var(--cobalt-bright), var(--cobalt-blue)); }
+    .skill-bar-fill { background: linear-gradient(90deg, var(--cobalt-blue), var(--acid-lime)); box-shadow: 0 0 8px rgba(212, 255, 36, 0.28); }
+    .section-divider { background: linear-gradient(90deg, transparent, rgba(21, 88, 201, 0.8), rgba(212, 255, 36, 0.65), transparent); }
+    .stat-card { background: rgba(8, 13, 24, 0.72); border-color: rgba(21, 88, 201, 0.38); }
+    .stat-card:hover { border-color: var(--acid-lime); box-shadow: 0 0 20px rgba(212, 255, 36, 0.12); }
+    .corner-tl::before { border-color: var(--acid-lime); }
+    .corner-br::after { border-color: var(--cobalt-blue); }
+    .hero-first-name { color: var(--cobalt-bright) !important; }
+    .hero-last-name { color: var(--acid-lime) !important; background: none !important; -webkit-text-fill-color: var(--acid-lime); }
+    .brand-word { color: var(--acid-lime); }
+    .brand-dot { color: var(--cobalt-blue); }
+
+    .text-cyan-400, .text-cyan-500,
+    .text-blue-400, .text-blue-500,
+    .text-indigo-400, .text-indigo-500,
+    .text-violet-400, .text-violet-500 { color: var(--cobalt-bright) !important; }
+    .text-fuchsia-400, .text-fuchsia-500,
+    .text-pink-400, .text-pink-500,
+    .text-green-400, .text-green-500,
+    .text-lime-400, .text-lime-500,
+    .text-yellow-400, .text-yellow-500 { color: var(--acid-lime) !important; }
+    [class~="bg-cyan-500/5"], [class~="bg-cyan-500/10"], [class~="bg-cyan-500/20"], [class~="bg-cyan-500/25"],
+    [class~="bg-blue-500/10"], [class~="bg-violet-500/10"], [class~="bg-violet-600/5"] { background-color: rgba(21, 88, 201, 0.12) !important; }
+    [class~="bg-fuchsia-500/10"], [class~="bg-fuchsia-600/5"],
+    [class~="bg-green-500/10"], [class~="bg-green-400"] { background-color: rgba(212, 255, 36, 0.12) !important; }
+    [class~="hover:bg-cyan-500/25"]:hover,
+    [class~="hover:bg-violet-500/25"]:hover { background-color: rgba(21, 88, 201, 0.2) !important; }
+    [class~="hover:border-cyan-400"]:hover,
+    [class~="hover:border-violet-400"]:hover { border-color: var(--acid-lime) !important; }
+    [class~="hover:shadow-neon-cyan"]:hover { box-shadow: 0 0 14px rgba(21, 88, 201, 0.24) !important; }
+    [class*="border-cyan-"], [class*="border-blue-"], [class*="border-indigo-"], [class*="border-violet-"] { border-color: rgba(21, 88, 201, 0.48) !important; }
+    [class*="border-fuchsia-"], [class*="border-pink-"], [class*="border-green-"], [class*="border-lime-"], [class*="border-yellow-"] { border-color: rgba(212, 255, 36, 0.38) !important; }
+    a.hover-neon:hover,
+    .hover\:text-cyan-400:hover, .hover\:text-cyan-300:hover,
+    .hover\:text-violet-400:hover, .hover\:text-fuchsia-400:hover { color: var(--acid-lime) !important; }
+
+    body.theme-light {
+      color-scheme: light;
+      background-color: #f1f5ff;
+      color: #334155;
+    }
+    body.theme-light::before {
+      background-image:
+        linear-gradient(rgba(21, 88, 201, 0.12) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(21, 88, 201, 0.12) 1px, transparent 1px);
+    }
+    body.theme-light .navbar-blur { background: rgba(241, 245, 255, 0.92); border-bottom-color: rgba(21, 88, 201, 0.22); }
+    body.theme-light .hero-bg {
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(21, 88, 201, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(212, 255, 36, 0.14) 0%, transparent 40%),
+        linear-gradient(135deg, #f1f5ff 0%, #f8faff 55%, #e8efff 100%);
+    }
+    body.theme-light .theme-toggle { background: rgba(255,255,255,.86); border-color: rgba(21,88,201,.45); color: #1048aa; }
+    body.theme-light .post-card,
+    body.theme-light .stat-card { background: rgba(255,255,255,.9); border-color: rgba(21,88,201,.3); box-shadow: 0 6px 18px rgba(21,88,201,.08); }
+    body.theme-light .post-card:hover,
+    body.theme-light .stat-card:hover { background: #fff; border-color: var(--cobalt-blue); box-shadow: 0 0 0 1px rgba(21,88,201,.16), 0 10px 24px rgba(21,88,201,.13); }
+    body.theme-light .text-white { color: #0f172a !important; }
+    body.theme-light .text-gray-300,
+    body.theme-light .text-gray-400 { color: #475569 !important; }
+    body.theme-light .text-gray-500,
+    body.theme-light .text-gray-600 { color: #64748b !important; }
+    body.theme-light .text-cyan-400, body.theme-light .text-cyan-500,
+    body.theme-light .text-blue-400, body.theme-light .text-blue-500,
+    body.theme-light .text-indigo-400, body.theme-light .text-indigo-500,
+    body.theme-light .text-violet-400, body.theme-light .text-violet-500,
+    body.theme-light .hero-first-name { color: #1558C9 !important; }
+    body.theme-light .text-fuchsia-400, body.theme-light .text-fuchsia-500,
+    body.theme-light .text-pink-400, body.theme-light .text-pink-500,
+    body.theme-light .text-green-400, body.theme-light .text-green-500,
+    body.theme-light .text-lime-400, body.theme-light .text-lime-500,
+    body.theme-light .text-yellow-400, body.theme-light .text-yellow-500,
+    body.theme-light .hero-last-name { color: #526a06 !important; -webkit-text-fill-color: #526a06; }
+    body.theme-light .brand-word { color: #526a06; }
+    body.theme-light .brand-dot { color: #1558C9; }
+    body.theme-light .cyber-tag-pink { background: rgba(212,255,36,.25); border-color: rgba(126,158,0,.4); color: #526a06; }
+    body.theme-light [class*="bg-cyber-black"] { background-color: #f1f5ff !important; }
+    body.theme-light [class*="border-gray-800"],
+    body.theme-light [class*="border-gray-700"],
+    body.theme-light [class*="border-gray-900"] { border-color: rgba(148,163,184,.45) !important; }
+    body.theme-light ::-webkit-scrollbar-track { background: #f1f5ff; }
+    body.theme-light ::-webkit-scrollbar-thumb { background: #1558C9; }
+    body.theme-light ::-webkit-scrollbar-thumb:hover { background: #1048aa; }
   </style>
 </head>
 <body class="text-gray-300 min-h-screen relative">
 
   <!-- ══════════ NAVBAR ══════════ -->
   <nav class="navbar-blur fixed top-0 left-0 right-0 z-50">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="w-full px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
 
         <!-- Logo -->
         <a href="index.html" class="flex items-center gap-3 group">
           <img src="https://avatars.githubusercontent.com/u/29503652?v=4" alt="Felipe Grucci" class="w-8 h-8 rounded-full object-cover border border-cyan-500/40" />
-          <span class="font-display text-sm font-bold text-cyan-400 group-hover:text-shadow tracking-widest uppercase">
-            GRUCCI<span class="text-fuchsia-400">.</span>DEV
+          <span class="font-display text-sm font-bold group-hover:text-shadow tracking-widest uppercase">
+            <span class="brand-word">GRUCCI</span><span class="brand-dot">.</span><span class="brand-word">DEV</span>
           </span>
         </a>
 
         <!-- Desktop Nav -->
-        <div class="hidden md:flex items-center gap-8">
+        <div class="hidden md:flex items-center gap-4 lg:gap-6">
           <a href="index.html" class="hover-neon text-gray-400 font-mono text-sm tracking-wide uppercase transition-all duration-300">
             <span class="text-cyan-500 mr-1">./</span>Home
           </a>
           <a href="#bio" class="hover-neon text-gray-400 font-mono text-sm tracking-wide uppercase transition-all duration-300">
             <span class="text-fuchsia-500 mr-1">./</span>Bio
           </a>
-          <a href="#posts" class="hover-neon text-gray-400 font-mono text-sm tracking-wide uppercase transition-all duration-300">
+          <a href="posts.html" class="hover-neon text-gray-400 font-mono text-sm tracking-wide uppercase transition-all duration-300">
             <span class="text-violet-500 mr-1">./</span>Posts
           </a>
           <a href="https://github.com/Grucci" target="_blank" class="hover-neon text-gray-400 font-mono text-sm tracking-wide uppercase transition-all duration-300">
@@ -467,7 +608,7 @@
         <a href="#bio" class="block font-mono text-sm text-gray-400 hover:text-fuchsia-400 transition-colors py-2 border-b border-gray-800">
           <span class="text-fuchsia-500">./</span> Bio
         </a>
-        <a href="#posts" class="block font-mono text-sm text-gray-400 hover:text-violet-400 transition-colors py-2 border-b border-gray-800">
+        <a href="posts.html" class="block font-mono text-sm text-gray-400 hover:text-violet-400 transition-colors py-2 border-b border-gray-800">
           <span class="text-violet-500">./</span> Posts
         </a>
         <a href="https://github.com/Grucci" target="_blank" class="block font-mono text-sm text-gray-400 hover:text-cyan-400 transition-colors py-2 border-b border-gray-800">
@@ -490,8 +631,8 @@
     <div class="absolute bottom-1/3 right-1/4 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none"></div>
     <div class="absolute top-1/3 right-1/3 w-48 h-48 bg-fuchsia-600/5 rounded-full blur-3xl pointer-events-none"></div>
 
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-20 relative z-10">
-      <div class="flex flex-col md:flex-row items-center gap-12">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-20 relative z-10">
+      <div class="flex flex-col md:flex-row items-center justify-center gap-12">
 
         <!-- Avatar -->
         <div class="flex-shrink-0 animate-float">
@@ -520,25 +661,20 @@
           </div>
 
           <h1 class="font-display font-black text-white mb-2 glitch-text leading-tight">
-            <span class="block text-1xl sm:text-2xl lg:text-3xl text-cyan-400">Felipe</span>
-            <span class="block text-5xl sm:text-6xl lg:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-violet-400 to-fuchsia-400">
+            <span class="hero-first-name block text-1xl sm:text-2xl lg:text-3xl">Felipe</span>
+            <span class="hero-last-name block text-5xl sm:text-6xl lg:text-7xl">
               GRUCCI
             </span>
           </h1>
 
-          <div class="font-mono text-sm text-cyan-400 mb-4 tracking-widest uppercase">
+          <div class="font-mono text-sm text-cyan-400 mb-2 tracking-widest uppercase">
             &gt;&gt; IT Infrastructure Engineer Specialist_<span class="animate-blink">█</span>
           </div>
 
-          <br class="text-gray-400 text-lg font-body max-w-lg mb-6 leading-relaxed">
-            Trabalhando como <span class="text-cyan-400">Cloud Infrastructure Engineering</span>. 
-            <br>Especialista em Terraform, AWS, Azure e muito mais.</br>
+          <p class="text-gray-400 text-lg font-body max-w-lg mb-8 leading-relaxed">
+            Trabalhando como <span class="text-cyan-400">Cloud Infrastructure Engineering</span>.
+            <br>Especialista em Terraform, AWS, Azure e muito mais.
           </p>
-
-          <!-- <p class="text-gray-400 text-lg font-body max-w-lg mb-6 leading-relaxed">
-            Trabalhando como <span class="text-cyan-400">Cloud Infrastructure Engineering</span> no
-            <span class="text-fuchsia-400"> Banco Bradesco</span>. Especialista em Terraform, AWS, Azure e muito mais.
-          </p> -->
 
           <!-- CTA Buttons -->
           <div class="flex flex-wrap gap-4 justify-center md:justify-start">
@@ -548,7 +684,7 @@
                       hover:bg-cyan-500/25 hover:border-cyan-400 hover:shadow-neon-cyan">
               Ver Bio ↓
             </a>
-            <a href="#posts"
+            <a href="posts.html"
                class="font-mono text-sm uppercase tracking-widest px-6 py-3 clip-corner transition-all duration-300
                       bg-violet-500/10 border border-violet-500/40 text-violet-400
                       hover:bg-violet-500/25 hover:border-violet-400">
@@ -559,7 +695,7 @@
       </div>
 
       <!-- Stats row -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-16">
+      <div class="grid grid-cols-1 sm:grid-cols-3 max-w-4xl mx-auto gap-4 mt-16">
         <div class="stat-card p-4 text-center clip-corner-sm relative">
           <div class="font-display text-2xl font-black text-cyan-400">14+</div>
           <div class="font-mono text-xs text-gray-500 uppercase tracking-wider mt-1">Repositórios</div>
@@ -713,21 +849,11 @@
         <div class="font-mono text-violet-500 text-sm">[02]</div>
         <h2 class="font-display text-2xl font-bold text-white uppercase tracking-widest">Posts Recentes</h2>
         <div class="flex-1 section-divider"></div>
+        <a href="posts.html" class="font-mono text-xs text-cyan-400 hover:text-cyan-300 uppercase tracking-wider transition-colors">Ver todos →</a>
       </div>
 
-      <!-- Dynamic posts: featured + grid injected by JS -->
-      <div id="featured-post-container"></div>
+      <!-- Recent posts are rendered in publication-date order -->
       <div id="posts-grid" class="grid md:grid-cols-2 gap-6"></div>
-
-      <!-- Load more -->
-      <div id="load-more-container" class="text-center mt-10 hidden">
-        <button id="load-more-btn"
-          class="font-mono text-sm uppercase tracking-widest px-8 py-3 clip-corner transition-all duration-300
-                 bg-transparent border border-gray-700 text-gray-500
-                 hover:border-cyan-500/50 hover:text-cyan-400 hover:bg-cyan-500/5">
-          Carregar mais posts ↓
-        </button>
-      </div>
     </div>
   </section>
 
@@ -852,12 +978,18 @@
       return `${String(d).padStart(2,'0')} ${months[m-1]} ${y}`;
     }
 
+    function readingTime(markdown) {
+      const content = markdown.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, '').trim();
+      const words = content ? content.split(/\s+/).length : 0;
+      return `${Math.max(1, Math.round(words / 200))} min de leitura`;
+    }
+
     function buildFeaturedCard(post) {
       const tags = (post.tags || []).map(t =>
         `<span class="cyber-tag ${tagClass(t)}">${t}</span>`
       ).join('');
       return `
-        <a href="post.html?post=${post.slug}" class="block mb-8 group">
+        <a href="post.html?post=${post.slug}" class="block group md:col-span-2">
           <div class="post-card neon-border-cyan p-6 clip-corner relative overflow-hidden">
             <div class="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-2xl pointer-events-none"></div>
             <div class="flex flex-col sm:flex-row sm:items-start gap-4">
@@ -867,8 +999,11 @@
                 </div>
               </div>
               <div class="flex-1">
-                <div class="flex flex-wrap items-center gap-3 mb-2">
-                  <span class="font-mono text-xs text-gray-600">${formatDate(post.date)}</span>
+                <div class="flex flex-wrap items-center gap-x-4 gap-y-1 mb-2 font-mono text-xs text-gray-600">
+                  <span>${formatDate(post.date)}</span>
+                  <span>${post.readTime}</span>
+                </div>
+                <div class="flex flex-wrap items-center gap-2 mb-2">
                   ${tags}
                   <span class="font-mono text-xs text-cyan-500 bg-cyan-500/10 px-2 py-0.5 border border-cyan-500/30">DESTAQUE</span>
                 </div>
@@ -886,8 +1021,8 @@
     // Card colors cycling for non-featured posts
     const cardStyles = [
       { border: 'neon-border-pink', iconBg: 'bg-fuchsia-500/10 border-fuchsia-500/30', hoverBg: 'group-hover:bg-fuchsia-500/20', textHover: 'group-hover:text-fuchsia-400', readMore: 'text-fuchsia-400 group-hover:text-fuchsia-300' },
-      { border: '', borderStyle: 'border: 1px solid rgba(123,47,255,0.3); box-shadow: 0 0 5px rgba(123,47,255,0.15);', iconBg: 'bg-violet-500/10 border-violet-500/30', hoverBg: 'group-hover:bg-violet-500/20', textHover: 'group-hover:text-violet-400', readMore: 'text-violet-400 group-hover:text-violet-300' },
-      { border: '', borderStyle: 'border: 1px solid rgba(0,255,136,0.2);', iconBg: 'bg-green-500/10 border-green-500/30', hoverBg: '', textHover: 'group-hover:text-green-400', readMore: 'text-green-400 group-hover:text-green-300' },
+      { border: '', borderStyle: 'border: 1px solid rgba(21,88,201,0.4); box-shadow: 0 0 5px rgba(21,88,201,0.16);', iconBg: 'bg-violet-500/10 border-violet-500/30', hoverBg: 'group-hover:bg-violet-500/20', textHover: 'group-hover:text-violet-400', readMore: 'text-violet-400 group-hover:text-violet-300' },
+      { border: '', borderStyle: 'border: 1px solid rgba(212,255,36,0.28);', iconBg: 'bg-green-500/10 border-green-500/30', hoverBg: '', textHover: 'group-hover:text-green-400', readMore: 'text-green-400 group-hover:text-green-300' },
       { border: 'neon-border-cyan', iconBg: 'bg-cyan-500/10 border-cyan-500/30', hoverBg: 'group-hover:bg-cyan-500/20', textHover: 'group-hover:text-cyan-400', readMore: 'text-cyan-400 group-hover:text-cyan-300' },
     ];
 
@@ -905,7 +1040,10 @@
                 <span class="text-lg">${post.emoji || '📝'}</span>
               </div>
               <div>
-                <div class="font-mono text-xs text-gray-600 mb-1">${formatDate(post.date)}</div>
+                <div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs text-gray-600 mb-2">
+                  <span>${formatDate(post.date)}</span>
+                  <span>${post.readTime}</span>
+                </div>
                 <div class="flex flex-wrap gap-2">${tags}</div>
               </div>
             </div>
@@ -916,54 +1054,34 @@
         </a>`;
     }
 
-    const PAGE_SIZE = 4; // posts per page (grid, not counting featured)
-    let allPosts = [];
-    let shownCount = 0;
+    function postTimestamp(post) {
+      const match = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(post.date || '');
+      if (!match) return 0;
+      return new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3])).getTime();
+    }
+
+    function sortPostsByDate(posts) {
+      return [...posts].sort((a, b) => postTimestamp(b) - postTimestamp(a));
+    }
 
     async function loadPosts() {
       try {
         const resp = await fetch('posts/index.json');
-        allPosts = await resp.json();
+        if (!resp.ok) throw new Error(`Não foi possível carregar posts/index.json (${resp.status})`);
+        const allPosts = await resp.json();
+        if (!Array.isArray(allPosts)) throw new Error('O manifesto de posts deve conter uma lista.');
+        const recentPosts = sortPostsByDate(allPosts).slice(0, 3);
+        const grid = document.getElementById('posts-grid');
+        grid.innerHTML = recentPosts.map((post, index) =>
+          post.featured ? buildFeaturedCard(post) : buildGridCard(post, index)
+        ).join('');
 
-        const featured = allPosts.find(p => p.featured);
-        const rest = allPosts.filter(p => !p.featured);
-
-        if (featured) {
-          document.getElementById('featured-post-container').innerHTML = buildFeaturedCard(featured);
-        }
-
-        shownCount = 0;
-        renderNextPage(rest);
-
-        document.getElementById('load-more-btn').addEventListener('click', () => renderNextPage(rest));
-
-        // Post card hover glow
         attachCardHover();
       } catch (err) {
         console.error('Erro ao carregar posts:', err);
         document.getElementById('posts-grid').innerHTML =
           `<div class="col-span-2 text-center font-mono text-xs text-red-400 py-8">Erro ao carregar posts.</div>`;
       }
-    }
-
-    function renderNextPage(rest) {
-      const slice = rest.slice(shownCount, shownCount + PAGE_SIZE);
-      const grid = document.getElementById('posts-grid');
-      slice.forEach((post, i) => {
-        const div = document.createElement('div');
-        div.innerHTML = buildGridCard(post, shownCount + i);
-        grid.appendChild(div.firstElementChild);
-      });
-      shownCount += slice.length;
-
-      const loadMoreContainer = document.getElementById('load-more-container');
-      if (shownCount < rest.length) {
-        loadMoreContainer.classList.remove('hidden');
-      } else {
-        loadMoreContainer.classList.add('hidden');
-      }
-
-      attachCardHover();
     }
 
     function attachCardHover() {
@@ -976,9 +1094,9 @@
         card.addEventListener('mouseenter', function() {
           const isLight = document.body.classList.contains('theme-light');
           this.style.boxShadow = isLight
-            ? '0 0 0 1px rgba(14, 165, 233, 0.18), 0 12px 26px rgba(59, 130, 246, 0.14)'
-            : '0 0 0 1px rgba(0, 255, 255, 0.2), 0 0 25px rgba(0, 255, 255, 0.08)';
-          this.style.borderColor = isLight ? 'rgba(14, 165, 233, 0.42)' : 'rgba(0, 255, 255, 0.8)';
+            ? '0 0 0 1px rgba(21, 88, 201, 0.16), 0 10px 24px rgba(21, 88, 201, 0.13)'
+            : '0 0 0 1px rgba(212, 255, 36, 0.18), 0 0 24px rgba(21, 88, 201, 0.2)';
+          this.style.borderColor = isLight ? 'rgba(21, 88, 201, 0.55)' : '#D4FF24';
         });
 
         card.addEventListener('mouseleave', resetStyle);
