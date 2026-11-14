@@ -33,7 +33,7 @@
   {
     "title": "Azure Storage Account: fundamentos, arquitetura e boas práticas (parte 1)",
     "slug": "azure-storage-account-parte-1",
-    "date": "2026-11-01",
+    "date": "2026-11-06",
     "category": "Azure Storage",
     "summary": "Um guia para entender os serviços de armazenamento da Azure e suas aplicações em ambientes corporativos.",
     "img_path": "images/",
@@ -45,6 +45,21 @@
       "fundamentals"
     ],
     "emoji": "💾",
+    "featured": false
+  },
+  {
+    "title": "Fundamentos do Terraform (parte 2)",
+    "slug": "fundamentos-do-terraform-parte-2",
+    "date": "2026-11-14",
+    "category": "Infrastructure as Code",
+    "summary": "Entenda como declarar e gerenciar recursos no Terraform, referenciar recursos relacionados e criar múltiplas instâncias com count e for_each. O artigo também aborda a inicialização de instâncias e as dependências entre recursos.",
+    "img_path": "/images/",
+    "tags": [
+      "iac",
+      "#terraform",
+      "#fundamentals"
+    ],
+    "emoji": "🏗️",
     "featured": true
   }
 ]

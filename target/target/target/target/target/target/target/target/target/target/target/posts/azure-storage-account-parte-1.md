@@ -8,7 +8,7 @@ img_path: images/
 tags: [storage, account, armazenamento, azure, fundamentals]
 emoji: "💾"
 featured: false
----aqui mais um teste de PR
+---
 
 Depois de algumas mudanças no trabalho, comecei a fazer parte do time responsável pelos produtos relacionados a Storage, o que me levou a novos desafios e oportunidadesde aprofundar meus conhecimentos sobre os serviçoes de armazenamento disponíveis nos diversos Cloud Providers.
 
