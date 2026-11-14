@@ -1070,7 +1070,18 @@
         if (!resp.ok) throw new Error(`Não foi possível carregar posts/index.json (${resp.status})`);
         const allPosts = await resp.json();
         if (!Array.isArray(allPosts)) throw new Error('O manifesto de posts deve conter uma lista.');
-        const recentPosts = sortPostsByDate(allPosts).slice(0, 3);
+        const recentPosts = await Promise.all(
+          sortPostsByDate(allPosts).slice(0, 3).map(async post => {
+            if (post.readTime) return post;
+
+            const articleResp = await fetch(`posts/${encodeURIComponent(post.slug)}.md`);
+            if (!articleResp.ok) {
+              throw new Error(`Não foi possível carregar posts/${post.slug}.md (${articleResp.status})`);
+            }
+
+            return { ...post, readTime: readingTime(await articleResp.text()) };
+          })
+        );
         const grid = document.getElementById('posts-grid');
         grid.innerHTML = recentPosts.map((post, index) =>
           post.featured ? buildFeaturedCard(post) : buildGridCard(post, index)
